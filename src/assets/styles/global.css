@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "PlusJakartaSansBold";
+  src: url("../fonts/PlusJakartaSans-Bold.ttf");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PlusJakartaSansMedium";
+  src: url("../fonts/PlusJakartaSans-Medium.ttf");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PlusJakartaSansRegular";
+  src: url("../fonts/PlusJakartaSans-Regular.ttf");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PlusJakartaSansSemiBold";
+  src: url("../fonts/PlusJakartaSans-SemiBold.ttf");
+  font-style: normal;
+}
+
 *,
 ::before,
 ::after {
@@ -17,7 +41,7 @@ picture {
 }
 
 body {
-  font-family: "Cursive";
+  font-family: "PlusJakartaSansMedium";
   display: flex;
   overflow-x: hidden;
   min-width: 320px;
@@ -33,4 +57,27 @@ textarea,
 select {
   font-family: inherit;
   font-size: inherit;
+}
+
+@layer utilities {
+  .headingXL {
+    font-size: 24px;
+    font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
+    line-height: 30px;
+  }
+  .headingL {
+    font-size: 18px;
+    font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
+    line-height: 23px;
+  }
+  .headingM {
+    font-size: 15px;
+    font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
+    line-height: 19px;
+  }
+  .headingS {
+    font-size: 12px;
+    font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
+    line-height: 15px;
+  }
 }

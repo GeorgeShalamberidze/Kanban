@@ -1,5 +1,8 @@
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/route";
+
 const App: React.FC = () => {
-  return <div className="text-3xl">This is whaaat</div>;
+  return <RouterProvider router={router} />;
 };
 
 export default App;
