@@ -60,10 +60,15 @@ select {
 }
 
 @layer utilities {
-  .headingXL {
+  .headingXL-white {
     font-size: 24px;
     font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
-    line-height: 30px;
+    color: #000112;
+  }
+  .headingXL-dark {
+    font-size: 24px;
+    font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;
+    color: #ffffff;
   }
   .headingL {
     font-size: 18px;
