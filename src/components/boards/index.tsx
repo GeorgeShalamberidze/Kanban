@@ -11,13 +11,13 @@ const Boards: React.FC<{ boards: Array<string> }> = ({ boards }) => {
     <div className="flex flex-col w-full mx-auto flex-1">
       {boards.map((item, i) => (
         <div
+          key={i}
           className={twMerge(
             "w-[90%] rounded-r-full",
             `${active === i ? "bg-main-purple" : "hover:bg-light-secondary"}`
           )}
         >
           <div
-            key={i}
             className={twMerge(
               "flex items-center gap-4 py-4 w-[80%] mx-auto cursor-pointer"
             )}
