@@ -1,4 +1,4 @@
-import PageNotFound from "@/components/page-not-found";
+import PageNotFound from "@/components/pageNotFound";
 import RootLayout from "@/layout/rootLayout";
 import {
   createBrowserRouter,

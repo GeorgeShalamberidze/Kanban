@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  @apply transition-colors duration-300;
+}
+
 @font-face {
   font-family: "PlusJakartaSansBold";
   src: url("../fonts/PlusJakartaSans-Bold.ttf");
