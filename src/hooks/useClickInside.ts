@@ -11,7 +11,7 @@ const useClickInside = (
       if (
         elementRef.current &&
         event.target instanceof Node &&
-        elementRef.current.contains(event.target)
+        !elementRef.current.contains(event.target)
       ) {
         callbackRef.current();
       }
