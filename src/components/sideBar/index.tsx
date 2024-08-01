@@ -4,7 +4,20 @@ import Boards from "../boards";
 import HideSideBar from "../hideSideBar";
 import KanbanHeader from "../kanbanHeader";
 
-const testData = ["Platform Launch", "Marketing Plan", "Roadmap"];
+const testData = [
+  {
+    board: "Platform Launch",
+    id: 0,
+  },
+  {
+    board: "Marketing Plan",
+    id: 1,
+  },
+  {
+    board: "Roadmap",
+    id: 2,
+  },
+];
 
 const SideBar: React.FC = () => {
   return (

@@ -24,7 +24,7 @@ export const useRootLayout = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isSidebarOpen]);
+  }, []);
 
   return {
     isThemeDark,

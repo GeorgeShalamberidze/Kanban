@@ -1,11 +1,14 @@
 import BoardIcon from "@/assets/svg/icon-board.svg";
 import BoardIconWhite from "@/assets/svg/icon-board-white.svg";
 import BoardIconPurple from "@/assets/svg/icon-board-purple.svg";
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { activeBoardAtom } from "@/store/board";
+import { useAtom } from "jotai";
 
-const Boards: React.FC<{ boards: Array<string> }> = ({ boards }) => {
-  const [active, setActive] = useState<number | undefined>(0);
+const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
+  boards,
+}) => {
+  const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
 
   return (
     <div className="flex flex-col w-full mx-auto flex-1">
@@ -14,24 +17,24 @@ const Boards: React.FC<{ boards: Array<string> }> = ({ boards }) => {
           key={i}
           className={twMerge(
             "w-[90%] rounded-r-full",
-            `${active === i ? "bg-main-purple" : "hover:bg-light-secondary"}`
+            `${activeBoard?.id === i ? "bg-main-purple" : "hover:bg-light-secondary"}`
           )}
         >
           <div
             className={twMerge(
               "flex items-center gap-4 py-4 w-[80%] mx-auto cursor-pointer"
             )}
-            onClick={() => setActive(i)}
+            onClick={() => setActiveBoard(item)}
           >
-            {active === i ? (
+            {activeBoard?.id === i ? (
               <img src={BoardIconWhite} alt="board icon" />
             ) : (
               <img src={BoardIcon} alt="board icon" />
             )}
             <p
-              className={`${active === i ? "text-white" : "text-medium-gray"} font-bold`}
+              className={`${activeBoard?.id === i ? "text-white" : "text-medium-gray"} font-bold`}
             >
-              {item}
+              {item.board}
             </p>
           </div>
         </div>

@@ -9,7 +9,7 @@ const KanbanHeader: React.FC = () => {
   return (
     <div
       className={twMerge(
-        "pl-[34px] pt-8 pb-14 bg-white dark:bg-dark-gray w-full max-w-[300px]",
+        "pl-[34px] py-8 pb-10 bg-white dark:bg-dark-gray w-full max-w-[300px] max-h-[97px] flex",
         `${!isSidebarOpen ? "border-r border-b border-solid border-lines-light dark:border-lines-dark" : ""}`
       )}
     >

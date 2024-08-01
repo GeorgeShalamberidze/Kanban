@@ -3,6 +3,7 @@ import ShowSideBar from "@/components/showSideBar";
 import SideBar from "@/components/sideBar";
 import { Outlet } from "react-router";
 import { useRootLayout } from "@/layout/useRootLayout";
+import Header from "@/components/header";
 
 const RootLayout = () => {
   const { isSidebarOpen, isThemeDark } = useRootLayout();
@@ -11,7 +12,7 @@ const RootLayout = () => {
     <div className={`${isThemeDark ? "dark" : ""}`}>
       <div
         className={
-          "h-screen w-screen bg-light-secondary dark:bg-dark-secondary relative"
+          "h-screen w-screen bg-light-secondary dark:bg-dark-secondary relative flex"
         }
       >
         {isSidebarOpen ? (
@@ -22,6 +23,7 @@ const RootLayout = () => {
             <ShowSideBar />
           </>
         )}
+        <Header />
         <Outlet />
       </div>
     </div>
