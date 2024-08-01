@@ -14,7 +14,7 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
   useClickInside(containerRef, hideModal);
 
   return (
-    <div className=" fixed top-0 left-0 h-screen w-full bg-black/20 flex items-center justify-center">
+    <div className=" fixed top-0 left-0 h-screen w-full bg-black/60 flex items-center justify-center">
       <div
         ref={containerRef}
         className="w-[90%] h-1/2 max-w-[480px] rounded-md flex p-8 bg-white dark:bg-dark-gray"
