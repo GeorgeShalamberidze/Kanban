@@ -1,7 +1,6 @@
 import { activeBoardAtom } from "@/store/board";
 import { useAtom } from "jotai";
 import PlusIcon from "@/assets/svg/icon-add-task-mobile.svg";
-import Dots from "@/assets/svg/vertical-dots.svg";
 import KanbanLogo from "@/assets/svg/kanban.svg";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
 import UpCarrot from "@/assets/svg/icon-chevron-up.svg";
@@ -16,6 +15,7 @@ import AllBoards from "../allBoards";
 import { boardData } from "@/constants/boardData";
 import Boards from "../boards";
 import ThemeSwitcher from "../themeSwitcher";
+import ThreeDots from "../threeDots";
 
 const Header: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
@@ -61,6 +61,7 @@ const Header: React.FC = () => {
       </div>
       {isDropDownOpen && (
         <DropDown
+          hasBg
           hideDropDown={handleCloseDropDown}
           className={twMerge("w-[85%] max-w-[400px] top-20 py-4")}
         >
@@ -79,7 +80,7 @@ const Header: React.FC = () => {
             <img src={PlusIcon} alt="plus icon" />
           </p>
         </div>
-        <img src={Dots} alt="vertical dots" className="cursor-pointer" />
+        <ThreeDots />
       </div>
       {isModalOpen && (
         <Modal hideModal={closeModal}>
