@@ -3,7 +3,7 @@ import { themeAtom } from "@/store/theme";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
-const MOBILE_BREAKPOINT = 640;
+const MOBILE_BREAKPOINT = 768;
 
 export const useRootLayout = () => {
   const [isThemeDark] = useAtom(themeAtom);

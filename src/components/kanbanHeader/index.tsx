@@ -9,11 +9,11 @@ const KanbanHeader: React.FC = () => {
   return (
     <div
       className={twMerge(
-        "pl-[34px] py-8 pb-10 bg-white dark:bg-dark-gray w-full max-w-[300px] max-h-[97px] flex",
+        "pl-[34px] py-8 pb-10 bg-white dark:bg-dark-gray w-full max-w-[300px] h-[97px] items-center hidden md:flex",
         `${!isSidebarOpen ? "border-r border-b border-solid border-lines-light dark:border-lines-dark" : ""}`
       )}
     >
-      <div className="flex items-center gap-4 cursor-pointer w-fit">
+      <div className="flex items-center gap-4 cursor-pointer w-fit text-center">
         <img src={KanbanIcon} alt="kanban logo" />
         <p className="text-dark-gray text-2xl font-bold dark:text-white">
           kanban
