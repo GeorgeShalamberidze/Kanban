@@ -1,3 +1,5 @@
+import { getBoardData } from "@/api/boards/api";
+import { allBoardsAtom } from "@/store/board";
 import { isSidebarOpenAtom } from "@/store/sidebar";
 import { themeAtom } from "@/store/theme";
 import { useAtom } from "jotai";
@@ -8,8 +10,11 @@ const MOBILE_BREAKPOINT = 768;
 export const useRootLayout = () => {
   const [isThemeDark] = useAtom(themeAtom);
   const [isSidebarOpen, setIsSidebarOpen] = useAtom(isSidebarOpenAtom);
+  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
 
   useEffect(() => {
+    getBoardData().then((res) => setAllBoards(res));
+
     const handleResize = () => {
       if (window.innerWidth < MOBILE_BREAKPOINT) {
         setIsSidebarOpen(false);

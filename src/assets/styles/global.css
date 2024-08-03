@@ -64,6 +64,13 @@ select {
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
   .headingXL-white {
     font-size: 24px;
     font-family: "PlusJakartaSansBold", "Courier New", Courier, monospace;

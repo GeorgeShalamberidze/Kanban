@@ -1,9 +1,6 @@
-import { activeBoardAtom } from "@/store/board";
+import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { useAtom } from "jotai";
-import PlusIcon from "@/assets/svg/icon-add-task-mobile.svg";
 import KanbanLogo from "@/assets/svg/kanban.svg";
-import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
-import UpCarrot from "@/assets/svg/icon-chevron-up.svg";
 import useModal from "@/hooks/useModal";
 import Modal from "../modal";
 import AddTask from "../addTask";
@@ -12,10 +9,12 @@ import { useState } from "react";
 import DropDown from "../dropdown";
 import { twMerge } from "tailwind-merge";
 import AllBoards from "../allBoards";
-import { boardData } from "@/constants/boardData";
 import Boards from "../boards";
 import ThemeSwitcher from "../themeSwitcher";
 import ThreeDots from "../threeDots";
+import AddNewTask from "./addNewTask";
+import UpArrow from "./upArrow";
+import DownArrow from "./downArrow";
 
 const Header: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
@@ -23,6 +22,8 @@ const Header: React.FC = () => {
   // const { closeDropDown, isDropDownOpen, openDropDown } = useDropDown()
   const { isLowerThan } = useMediaQuery(768);
   const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
+
+  const [allBoards] = useAtom(allBoardsAtom);
 
   const handleOnClick = () => {
     if (!isLowerThan) return;
@@ -42,21 +43,9 @@ const Header: React.FC = () => {
           onClick={handleOnClick}
         >
           <p className="text-base sm:text-xl md:text-2xl font-bold text-black dark:text-white">
-            {activeBoard?.board}
+            {activeBoard?.name}
           </p>
-          {isDropDownOpen ? (
-            <img
-              src={UpCarrot}
-              className="w-fit h-full flex md:hidden"
-              alt="down carrot arrow"
-            />
-          ) : (
-            <img
-              src={DownCarrot}
-              className="w-fit h-full flex md:hidden"
-              alt="down carrot arrow"
-            />
-          )}
+          {isDropDownOpen ? <UpArrow /> : <DownArrow />}
         </div>
       </div>
       {isDropDownOpen && (
@@ -65,21 +54,17 @@ const Header: React.FC = () => {
           hideDropDown={handleCloseDropDown}
           className={twMerge("w-[85%] max-w-[400px] top-20 py-4")}
         >
-          <AllBoards className="text-base" boardCount={boardData.length} />
-          <Boards boards={boardData} />
+          {allBoards && allBoards.length > 0 ? (
+            <>
+              <AllBoards className="text-base" boardCount={allBoards.length} />
+              <Boards boards={allBoards} />
+            </>
+          ) : null}
           <ThemeSwitcher />
         </DropDown>
       )}
       <div className="flex gap-6">
-        <div
-          className="bg-main-purple hover:bg-main-purple-hover rounded-full text-white py-[10px] px-[18px] sm:py-3 sm:px-5 md:py-[15px] md:px-[25px] cursor-pointer"
-          onClick={openModal}
-        >
-          <p className="hidden md:flex">+ Add New Task</p>
-          <p className="flex md:hidden w-3 h-3">
-            <img src={PlusIcon} alt="plus icon" />
-          </p>
-        </div>
+        <AddNewTask openModal={openModal} />
         <ThreeDots />
       </div>
       {isModalOpen && (

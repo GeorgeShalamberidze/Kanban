@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { transformBoardNameToPath } from "@/helpers/transformBoardNameToPath";
 
-const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
+const Boards: React.FC<{ boards: Array<{ name: string; id: number }> }> = ({
   boards,
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
@@ -24,7 +24,7 @@ const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
           )}
           onClick={() => {
             setActiveBoard(item);
-            navigate(transformBoardNameToPath(item.board));
+            navigate(transformBoardNameToPath(item.name));
           }}
         >
           <div
@@ -38,7 +38,7 @@ const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
             <p
               className={`${activeBoard?.id === i ? "text-white" : "text-medium-gray"} font-bold`}
             >
-              {item.board}
+              {item.name}
             </p>
           </div>
         </div>

@@ -18,8 +18,9 @@ interface Column {
 export interface BoardData {
   name: string;
   columns: Column[];
+  id: number | string;
 }
 
 export type BoardDataResponse = {
-  boards: BoardData;
+  boards: BoardData[];
 };

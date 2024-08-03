@@ -1,6 +1,6 @@
+import { BoardData } from "@/api/boards/index.types";
 import { atom } from "jotai";
 
-export const activeBoardAtom = atom<{ id: number; board: string } | undefined>({
-  id: 0,
-  board: "Platform Launch",
-});
+export const activeBoardAtom = atom<BoardData | undefined>();
+
+export const allBoardsAtom = atom<BoardData[] | undefined>();

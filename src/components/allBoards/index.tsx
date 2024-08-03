@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-const AllBoards: React.FC<{ boardCount: number; className?: string }> = ({
+const AllBoards: React.FC<{ boardCount?: number; className?: string }> = ({
   boardCount,
   className,
 }) => {

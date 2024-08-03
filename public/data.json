@@ -281,7 +281,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 0
     },
     {
       "name": "Marketing Plan",
@@ -372,7 +373,8 @@
           "name": "Done",
           "tasks": []
         }
-      ]
+      ],
+      "id": 1
     },
     {
       "name": "Roadmap",
@@ -424,7 +426,8 @@
           "name": "Later",
           "tasks": []
         }
-      ]
+      ],
+      "id": 2
     }
   ]
 }
