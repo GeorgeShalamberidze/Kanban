@@ -4,11 +4,14 @@ import BoardIconPurple from "@/assets/svg/icon-board-purple.svg";
 import { twMerge } from "tailwind-merge";
 import { activeBoardAtom } from "@/store/board";
 import { useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
+import { transformBoardNameToPath } from "@/helpers/transformBoardNameToPath";
 
 const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
   boards,
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col w-full mx-auto flex-1">
@@ -16,15 +19,16 @@ const Boards: React.FC<{ boards: Array<{ board: string; id: number }> }> = ({
         <div
           key={i}
           className={twMerge(
-            "w-[90%] rounded-r-full",
+            "w-[90%] rounded-r-full cursor-pointer",
             `${activeBoard?.id === i ? "bg-main-purple" : "hover:bg-light-secondary"}`
           )}
+          onClick={() => {
+            setActiveBoard(item);
+            navigate(transformBoardNameToPath(item.board));
+          }}
         >
           <div
-            className={twMerge(
-              "flex items-center gap-4 py-4 w-[80%] mx-auto cursor-pointer"
-            )}
-            onClick={() => setActiveBoard(item)}
+            className={twMerge("flex items-center gap-4 py-4 w-[80%] mx-auto")}
           >
             {activeBoard?.id === i ? (
               <img src={BoardIconWhite} alt="board icon" />

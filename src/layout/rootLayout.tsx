@@ -15,16 +15,16 @@ const RootLayout = () => {
           "h-screen w-screen bg-light-secondary dark:bg-dark-secondary relative flex"
         }
       >
-        {isSidebarOpen ? (
-          <SideBar />
-        ) : (
-          <>
+        <div className="flex flex-col w-full">
+          <div className="flex ">
             <KanbanHeader />
-            <ShowSideBar />
-          </>
-        )}
-        <Header />
-        <Outlet />
+            <Header />
+          </div>
+          <div className="flex h-full">
+            {isSidebarOpen ? <SideBar /> : <ShowSideBar />}
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
   );

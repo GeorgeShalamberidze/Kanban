@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { DASHBOARD_PATHS } from "./route.enum";
+import Board from "@/components/board";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,6 +14,8 @@ export const router = createBrowserRouter(
       path={DASHBOARD_PATHS.ROOT}
       element={<RootLayout />}
       errorElement={<PageNotFound />}
-    ></Route>
+    >
+      <Route path={`${DASHBOARD_PATHS.BOARD}/:boardName`} element={<Board />} />
+    </Route>
   )
 );
