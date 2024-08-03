@@ -9,8 +9,6 @@ type AddNewTaskPropType = {
 const AddNewTask: React.FC<AddNewTaskPropType> = ({ openModal }) => {
   const [activeBoard] = useAtom(activeBoardAtom);
 
-  console.log(activeBoard);
-
   return (
     <button
       className={twMerge(

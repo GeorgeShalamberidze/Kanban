@@ -47,7 +47,6 @@ const ThreeDots: React.FC = () => {
             <div className="flex w-full gap-4 mb-2">
               <Button
                 title="Delete"
-                onClick={() => console.log("Delete clicked!")}
                 className="w-full flex items-center justify-center rounded-full text-white py-2 bg-red hover:bg-red-hover font-bold"
               />
               <Button
