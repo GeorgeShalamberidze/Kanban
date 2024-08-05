@@ -11,6 +11,7 @@ const Calendar: React.FC = () => {
   const setMonth = (inc: number) => {
     const newDate = new Date(date);
     newDate.setMonth(date.getMonth() + inc);
+    newDate.setDate(1);
     setDate(newDate);
     setDateArray(getCalendarDays(date));
   };
@@ -39,14 +40,14 @@ const Calendar: React.FC = () => {
   const getCalendarDays = (date: Date) => {
     const calendarStartDate = getCalendarStartDate(date);
 
-    return range(0, 41).map((num) => {
+    return rangeFromTo(0, 41).map((num) => {
       const currentDate = new Date(calendarStartDate);
       currentDate.setDate(calendarStartDate.getDate() + num);
       return currentDate;
     });
   };
 
-  const range = (start: number, end: number) => {
+  const rangeFromTo = (start: number, end: number) => {
     if (start >= end) return [];
 
     const length = end - start + 1;
