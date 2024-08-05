@@ -6,37 +6,44 @@ const Calendar: React.FC = () => {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const [dateArray, setDateArray] = useState<Array<Date>>([]);
-  const [ddd, setDdd] = useState<Date>(new Date());
-
-  const DAY_MS = 60 * 60 * 24 * 1000;
+  const [date, setDate] = useState<Date>(new Date());
 
   const setMonth = (inc: number) => {
-    const [year, month] = [ddd.getFullYear(), ddd.getMonth()];
-    setDdd(new Date(year, month + inc, 1));
-    setDateArray(getCalendarDays(ddd));
+    const newDate = new Date(date);
+    newDate.setMonth(date.getMonth() + inc);
+    setDate(newDate);
+    setDateArray(getCalendarDays(date));
   };
 
   useEffect(() => {
-    setDateArray(getCalendarDays(ddd));
-  }, []);
+    setDateArray(getCalendarDays(date));
+  }, [date]);
 
   const isSameMonth = (datee: Date): boolean => {
-    return datee.getMonth() === ddd.getMonth();
+    return datee.getMonth() === date.getMonth();
   };
 
-  const getCalendarStartDate = (date: Date) => {
-    const [year, month] = [date.getFullYear(), date.getMonth()];
-    const firstDay = new Date(year, month + 1).getTime();
+  const getCalendarStartDate = (date: Date): Date => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDayOfMonth = new Date(year, month, 1);
 
-    return range(1, 7)
-      .map((num) => new Date(firstDay - DAY_MS * num))
-      .find((v) => v.getDay() === 0);
+    // Calculate the last Sunday before the first day of the current month
+    const dayOfWeek = firstDayOfMonth.getDay();
+    const lastSunday = new Date(firstDayOfMonth);
+    lastSunday.setDate(firstDayOfMonth.getDate() - dayOfWeek);
+
+    return lastSunday;
   };
 
   const getCalendarDays = (date: Date) => {
-    const calendarStarTime = getCalendarStartDate(date)?.getTime() ?? 0;
+    const calendarStartDate = getCalendarStartDate(date);
 
-    return range(0, 41).map((num) => new Date(calendarStarTime + DAY_MS * num));
+    return range(0, 41).map((num) => {
+      const currentDate = new Date(calendarStartDate);
+      currentDate.setDate(calendarStartDate.getDate() + num);
+      return currentDate;
+    });
   };
 
   const range = (start: number, end: number) => {
@@ -47,42 +54,50 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-1 flex-col">
-      <div className="flex w-full flex-1 items-center justify-center gap-5">
+    <div className="w-full flex flex-1 flex-col gap-10 mt-10">
+      <div className="items-center flex justify-center gap-5">
         <Button
           title="-"
           className="w-12 h-12 bg-black text-center flex items-center justify-center rounded-2xl text-xl text-white"
           onClick={() => setMonth(-1)}
         />
-        <p>{ddd.toDateString()}</p>
+        <p>{date.toDateString()}</p>
         <Button
           title="+"
           className="w-12 h-12 bg-black text-center flex items-center justify-center rounded-2xl text-xl text-white"
           onClick={() => setMonth(1)}
         />
       </div>
-      <div>
-        <div className="flex gap-3">
+      <div className="w-full">
+        <div className="flex px-5">
           {days.map((day, i) => {
-            return <h1 key={i}>{day}</h1>;
+            return (
+              <h1 key={i} className="w-[118.28px] text-center">
+                {day}
+              </h1>
+            );
           })}
         </div>
 
-        <ul>
-          {dateArray.map((date, i) => (
-            <li
-              key={i}
-              className={twMerge(
-                "inline-block border border-solid font-bold border-gray-500 text-center cursor-pointer",
-                `${isSameMonth(date) ? "text-gray-300" : "text-black"}`
-              )}
-              style={{
-                width: "calc(100% / 7 - 2px)",
-              }}
-            >
-              {date.getDate()}
-            </li>
-          ))}
+        <ul className="w-full px-5">
+          {dateArray.map((val, i) => {
+            return (
+              <li
+                key={i}
+                className={twMerge(
+                  "inline-block border border-solid font-bold border-gray-500 text-center cursor-pointer",
+                  `${!isSameMonth(val) ? "text-gray-300" : "text-black"}`,
+                  `${val.toDateString() === date.toDateString() ? "bg-red" : ""}`
+                )}
+                style={{
+                  width: "calc(100% / 7)",
+                }}
+                onClick={() => setDate(val)}
+              >
+                {val.getDate()}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

@@ -10,9 +10,7 @@ const Board: React.FC = () => {
       {activeBoard && activeBoard.columns.length === 0 ? (
         <NoColumns />
       ) : (
-        <div>
-          <Calendar />
-        </div>
+        <Calendar />
       )}
     </div>
   );
