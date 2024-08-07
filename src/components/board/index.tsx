@@ -1,16 +1,16 @@
 import { activeBoardAtom } from "@/store/board";
 import { useAtom } from "jotai";
 import NoColumns from "./noColumns";
-import Calendar from "../calendar";
+import Columns from "./columns";
 
 const Board: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
   return (
-    <div className="w-full h-full flex flex-1 overflow-x-scroll no-scrollbar">
+    <div className="w-full h-full flex flex-1 overflow-scroll no-scrollbar">
       {activeBoard && activeBoard.columns.length === 0 ? (
         <NoColumns />
       ) : (
-        <Calendar />
+        <Columns boardData={activeBoard} />
       )}
     </div>
   );

@@ -20,7 +20,7 @@ const RootLayout = () => {
             <KanbanHeader />
             <Header />
           </div>
-          <div className="flex h-full">
+          <div className="flex h-full overflow-y-scroll no-scrollbar">
             {isSidebarOpen ? <SideBar /> : <ShowSideBar />}
             <Outlet />
           </div>

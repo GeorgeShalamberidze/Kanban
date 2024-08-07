@@ -32,6 +32,7 @@ const Calendar: React.FC = () => {
     // Calculate the last Sunday before the first day of the current month
     const dayOfWeek = firstDayOfMonth.getDay();
     const lastSunday = new Date(firstDayOfMonth);
+
     lastSunday.setDate(firstDayOfMonth.getDate() - dayOfWeek);
 
     return lastSunday;
