@@ -68,7 +68,7 @@ const Header: React.FC = () => {
         <ThreeDots />
       </div>
       {isModalOpen && (
-        <Modal hideModal={closeModal}>
+        <Modal hideModal={closeModal} className="w-full">
           <AddTask />
         </Modal>
       )}

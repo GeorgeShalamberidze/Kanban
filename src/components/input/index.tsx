@@ -10,7 +10,7 @@ const Input: React.FC<InputTypeProps> = ({ label, className, ...rest }) => {
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label className="text-xl text-medium-gray" htmlFor={label}>
+        <label className="text-lg text-medium-gray" htmlFor={label}>
           {label}
         </label>
       )}
