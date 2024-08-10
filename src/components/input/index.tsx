@@ -2,13 +2,13 @@ import { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface InputTypeProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   className?: string;
 }
 
 const Input: React.FC<InputTypeProps> = ({ label, className, ...rest }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       {label && (
         <label className="text-lg text-medium-gray" htmlFor={label}>
           {label}
