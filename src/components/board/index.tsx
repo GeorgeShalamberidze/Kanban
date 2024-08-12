@@ -1,7 +1,7 @@
 import { activeBoardAtom } from "@/store/board";
 import { useAtom } from "jotai";
 import NoColumns from "./noColumns";
-import Columns from "./columns";
+import Columns from "./columnView";
 
 const Board: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
