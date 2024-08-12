@@ -21,7 +21,7 @@ const Columns: React.FC<ColumnsPropTypes> = ({ boardData }) => {
       });
       setMaxHeight(Math.max(...arr));
     }
-  }, [boardData, maxHeight]);
+  }, [boardData]);
 
   return (
     <div className="flex gap-6 px-4 py-6 pb-5 h-full" ref={containerRef}>

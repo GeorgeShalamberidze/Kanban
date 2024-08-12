@@ -1,6 +1,5 @@
 import { Task } from "@/api/boards/index.types";
 import ColumnCards from "../columnCards";
-import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type ColumnPropType = {
@@ -10,10 +9,8 @@ type ColumnPropType = {
 };
 
 const Column: React.FC<ColumnPropType> = ({ name, taskLength, tasks }) => {
-  const [active, setActive] = useState<boolean>(false);
-
   return (
-    <div className={twMerge("w-[280px] column flex flex-col gap-6")}>
+    <div className={twMerge("w-[280px] column flex flex-col gap-6 h-full")}>
       <div className="flex gap-3 items-center text-medium-gray">
         <div
           className={`w-[15px] h-[15px] rounded-full ${
@@ -29,7 +26,7 @@ const Column: React.FC<ColumnPropType> = ({ name, taskLength, tasks }) => {
         <p>{name}</p>
         <span>{`(${taskLength ?? 0})`}</span>
       </div>
-      <ColumnCards tasks={tasks} />
+      <ColumnCards tasks={tasks} columnName={name} />
     </div>
   );
 };
