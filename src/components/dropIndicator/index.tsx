@@ -12,7 +12,7 @@ const DropIndicator: React.FC<DropIndicatorPropTypes> = ({
       style={{ border: "1px solid red" }}
       data-before={beforeId || "-1"}
       data-column={column}
-      className="my-0.5 h-0.5 w-full bg-gray-400 opacity-1"
+      className="my-0.5 h-0.5 w-full bg-gray-400 opacity-0"
     />
   );
 };
