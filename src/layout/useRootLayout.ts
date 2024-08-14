@@ -10,10 +10,13 @@ const MOBILE_BREAKPOINT = 768;
 export const useRootLayout = () => {
   const [isThemeDark] = useAtom(themeAtom);
   const [isSidebarOpen, setIsSidebarOpen] = useAtom(isSidebarOpenAtom);
-  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
+  const [_, setAllBoards] = useAtom(allBoardsAtom);
 
   useEffect(() => {
-    getBoardData().then((res) => setAllBoards(res));
+    getBoardData().then((res) => {
+      setAllBoards(res);
+      localStorage.setItem("boardData", JSON.stringify(res));
+    });
 
     const handleResize = () => {
       if (window.innerWidth < MOBILE_BREAKPOINT) {

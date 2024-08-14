@@ -10,7 +10,9 @@ type ColumnPropType = {
 
 const Column: React.FC<ColumnPropType> = ({ name, taskLength, tasks }) => {
   return (
-    <div className={twMerge("w-[280px] column flex flex-col gap-6 h-full")}>
+    <div
+      className={twMerge("w-[280px] column flex flex-col gap-[14px] h-full")}
+    >
       <div className="flex gap-3 items-center text-medium-gray">
         <div
           className={`w-[15px] h-[15px] rounded-full ${

@@ -17,7 +17,7 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
   useClickInside(containerRef, hideModal);
 
   return (
-    <div className=" fixed top-0 left-0 h-screen w-full bg-black/60 flex items-center justify-center">
+    <div className=" fixed top-0 left-0 h-screen w-full bg-black/60 flex items-center z-50 justify-center">
       <div
         ref={containerRef}
         className={twMerge(

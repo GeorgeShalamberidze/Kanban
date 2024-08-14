@@ -12,7 +12,7 @@ export interface Task {
   subtasks: Subtask[];
 }
 
-interface Column {
+export interface Column {
   name: string;
   tasks: Task[];
 }
