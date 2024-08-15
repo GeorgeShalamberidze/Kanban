@@ -1,5 +1,5 @@
 import Button from "@/components/button";
-import EditBoard from "@/components/editBoard";
+import EditBoardModalView from "@/components/editBoard";
 import Modal from "@/components/modal";
 import useModal from "@/hooks/useModal";
 
@@ -17,7 +17,7 @@ const NoColumns: React.FC = () => {
       />
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
-          <EditBoard />
+          <EditBoardModalView />
         </Modal>
       ) : null}
     </div>

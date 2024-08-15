@@ -30,6 +30,7 @@ const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
           )}
           onClick={() => {
             setActiveBoard(item);
+            localStorage.setItem("activeBoard", JSON.stringify(item));
             navigate(transformBoardNameToPath(item.name));
           }}
         >

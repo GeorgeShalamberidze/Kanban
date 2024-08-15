@@ -19,7 +19,6 @@ import DownArrow from "./downArrow";
 const Header: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
   const { openModal, closeModal, isModalOpen } = useModal();
-  // const { closeDropDown, isDropDownOpen, openDropDown } = useDropDown()
   const { isLowerThan } = useMediaQuery(768);
   const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
 

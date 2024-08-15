@@ -24,8 +24,8 @@ const Card: React.FC<CardPropType> = ({
       <motion.div
         layout
         layoutId={id}
-        onDragStart={(e: any) => handleDragStart(e, { id, title })}
         draggable
+        onDragStart={(e: any) => handleDragStart(e, { id, title })}
         className="bg-white dark:bg-dark-gray rounded-lg shadow-md px-4 py-[23px] cursor-pointer flex flex-col gap-2 active:cursor-grabbing"
       >
         <p className="font-bold text-[15px] text-black dark:text-white">
