@@ -22,7 +22,7 @@ const NewColumn: React.FC<{ maxHeight: number }> = ({ maxHeight }) => {
       </div>
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
-          <EditBoardModalView />
+          <EditBoardModalView hideModal={closeModal} />
         </Modal>
       ) : null}
     </>

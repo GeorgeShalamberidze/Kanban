@@ -21,7 +21,7 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
       <div
         ref={containerRef}
         className={twMerge(
-          "w-[90%] h-fit max-w-[480px] rounded-md flex p-8 bg-white dark:bg-dark-gray",
+          "w-[90%] h-fit max-w-[480px] rounded-md flex p-8 bg-white dark:bg-dark-gray max-h-[95vh] overflow-y-scroll no-scrollbar",
           `${className}`
         )}
       >

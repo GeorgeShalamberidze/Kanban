@@ -1,3 +1,4 @@
+import { Field } from "formik";
 import { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -14,7 +15,7 @@ const Input: React.FC<InputTypeProps> = ({ label, className, ...rest }) => {
           {label}
         </label>
       )}
-      <input
+      <Field
         {...rest}
         className={twMerge(
           "w-full border border-solid border-[#828fa35e] outline-none rounded-md py-2 px-4",
