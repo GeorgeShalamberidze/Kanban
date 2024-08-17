@@ -43,7 +43,7 @@ const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
               <img src={BoardIcon} alt="board icon" />
             )}
             <p
-              className={`${activeBoard?.id === i ? "text-white" : "text-medium-gray"} font-bold`}
+              className={`${activeBoard?.id === i ? "text-white" : "text-medium-gray"} font-bold truncate`}
             >
               {item.name}
             </p>

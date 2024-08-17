@@ -13,8 +13,6 @@ const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
   const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
 
-  console.log(allBoards);
-
   const handleSubmit = (values: {
     boardName: string | undefined;
     boardColumns: Column[];
@@ -42,25 +40,21 @@ const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
       if (!prev) return prev;
 
       const boardIndex = prev?.findIndex(
-        (board) => board.name === values.boardName
+        (board) => board.name === activeBoard?.name
       );
 
-      if (boardIndex == -1) return;
+      if (boardIndex === -1) return prev;
 
-      const updatedBoards = [...prev];
+      const updatedBoards = prev.map((board, index) =>
+        index === boardIndex
+          ? {
+              ...board,
+              name: values.boardName ? values.boardName : board.name,
+            }
+          : board
+      );
 
-      updatedBoards[boardIndex] = {
-        ...updatedBoards[boardIndex],
-        name: values.boardName
-          ? values.boardName
-          : updatedBoards[boardIndex].name,
-      };
-      console.log(updatedBoards);
-
-      return {
-        ...prev,
-        updatedBoards,
-      };
+      return updatedBoards;
     });
 
     hideModal();

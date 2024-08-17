@@ -33,6 +33,8 @@ const Header: React.FC = () => {
     setIsDropDownOpen(false);
   };
 
+  console.log(allBoards);
+
   return (
     <div className="w-full min-h-fit h-[97px] flex items-center gap-2 justify-between border-b border-solid border-lines-light dark:border-lines-dark bg-white dark:bg-dark-gray px-4 md:px-8 relative">
       <div className="flex gap-4 items-center">
@@ -41,7 +43,7 @@ const Header: React.FC = () => {
           className="flex items-center gap-2 cursor-pointer md:cursor-default"
           onClick={handleOnClick}
         >
-          <p className="text-base sm:text-xl md:text-2xl font-bold text-black dark:text-white">
+          <p className="text-base sm:text-xl md:text-2xl font-bold truncate max-w-80 text-black dark:text-white">
             {activeBoard?.name}
           </p>
           {isDropDownOpen ? <UpArrow /> : <DownArrow />}
