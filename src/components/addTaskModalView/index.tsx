@@ -19,7 +19,9 @@ const initialValues = {
   status: "",
 };
 
-const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
+const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
+  hideModal,
+}) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
 
   const handleSubmitAddTask = async (values: {
@@ -165,4 +167,4 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
   );
 };
 
-export default AddTask;
+export default AddTaskModalView;

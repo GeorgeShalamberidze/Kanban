@@ -70,7 +70,7 @@ const Header: React.FC = () => {
         </DropDown>
       )}
       <div className="flex gap-6">
-        <AddNewTask openModal={openModal} />
+        <AddNewTask />
         <ThreeDots />
       </div>
       {isModalOpen && (

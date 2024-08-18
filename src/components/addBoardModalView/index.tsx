@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { useNavigate } from "react-router-dom";
 import { transformBoardNameToPath } from "@/helpers/transformBoardNameToPath";
-import { generateRandomColor } from "@/helpers/generateRandomColo";
+import { generateRandomColor } from "@/helpers/generateRandomColor";
 
 const AddBoardModalView: React.FC<{
   hideModal: () => void;
