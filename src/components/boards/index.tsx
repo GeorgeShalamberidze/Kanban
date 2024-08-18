@@ -9,10 +9,6 @@ import { transformBoardNameToPath } from "@/helpers/transformBoardNameToPath";
 import { BoardData } from "@/api/boards/index.types";
 import useModal from "@/hooks/useModal";
 import Modal from "../modal";
-import Input from "../input";
-import { ADD_BOARD_FORM_FIELDS } from "./formFields";
-import Cross from "@/assets/svg/icon-cross.svg";
-import Button from "../button";
 import AddBoardModalView from "../addBoardModalView";
 
 const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
