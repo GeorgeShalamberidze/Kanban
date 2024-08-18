@@ -1,11 +1,33 @@
 import { useAtom } from "jotai";
 import Button from "../button";
-import { activeBoardAtom } from "@/store/board";
+import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 
 const DeleteBoardModalView: React.FC<{ closeModal: () => void }> = ({
   closeModal,
 }) => {
-  const [activeBoard] = useAtom(activeBoardAtom);
+  const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
+  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
+
+  const handleDeleteBoard = () => {
+    if (allBoards && activeBoard) {
+      const updatedBoards = allBoards.filter(
+        (board) => board.name !== activeBoard.name
+      );
+
+      setAllBoards(updatedBoards);
+
+      if (updatedBoards.length > 0) {
+        setActiveBoard(updatedBoards[0]);
+        localStorage.setItem("activeBoard", JSON.stringify(updatedBoards[0]));
+      } else {
+        setActiveBoard(undefined);
+        localStorage.removeItem("activeBoard");
+      }
+      localStorage.setItem("boardData", JSON.stringify(updatedBoards));
+    }
+    closeModal();
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <p className="text-red text-2xl font-bold">Delete this board?</p>
@@ -14,6 +36,7 @@ const DeleteBoardModalView: React.FC<{ closeModal: () => void }> = ({
         <Button
           title="Delete"
           className="w-full flex items-center justify-center rounded-full text-white py-2 bg-red hover:bg-red-hover font-bold"
+          onClick={handleDeleteBoard}
         />
         <Button
           title="Cancel"

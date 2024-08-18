@@ -1,16 +1,20 @@
-import { FieldArray, Form, Formik } from "formik";
-import { ADD_BOARD_FORM_FIELDS } from "../boards/formFields";
 import Button from "../button";
 import Input from "../input";
 import Cross from "@/assets/svg/icon-cross.svg";
+import { FieldArray, Form, Formik } from "formik";
+import { ADD_BOARD_FORM_FIELDS } from "../boards/formFields";
 import { useAtom } from "jotai";
 import { activeBoardAtom, allBoardsAtom } from "@/store/board";
+import { useNavigate } from "react-router-dom";
+import { transformBoardNameToPath } from "@/helpers/transformBoardNameToPath";
+import { generateRandomColor } from "@/helpers/generateRandomColo";
 
-const AddBoardModalView: React.FC<{ hideModal: () => void }> = ({
-  hideModal,
-}) => {
+const AddBoardModalView: React.FC<{
+  hideModal: () => void;
+}> = ({ hideModal }) => {
   const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
   const [_, setActiveBoard] = useAtom(activeBoardAtom);
+  const navigate = useNavigate();
 
   const handleSubmit = (values: {
     boardName: string;
@@ -18,23 +22,31 @@ const AddBoardModalView: React.FC<{ hideModal: () => void }> = ({
       name: string;
     }[];
   }) => {
+    const lastBoard = allBoards?.[allBoards.length - 1];
+    const id = typeof lastBoard?.id === "number" ? lastBoard.id + 1 : 0;
+
+    const newBoard = {
+      id,
+      name: values.boardName,
+      columns: values.boardColumns.map((column) => ({
+        name: column.name,
+        tasks: [],
+        bgColor: generateRandomColor(),
+      })),
+    };
+
+    setAllBoards((prev) => (!prev ? prev : [...prev, newBoard]));
+    setActiveBoard(newBoard);
     if (allBoards && allBoards.length > 0) {
-      const lastBoard = allBoards[allBoards.length - 1];
-      const id = typeof lastBoard.id === "number" ? lastBoard.id + 1 : 1;
-
-      const newBoard = {
-        id,
-        name: values.boardName,
-        columns: values.boardColumns.map((column) => ({
-          name: column.name,
-          tasks: [],
-        })),
-      };
-
-      setAllBoards((prev) => (!prev ? prev : [...prev, newBoard]));
-      setActiveBoard(newBoard);
-      hideModal();
+      localStorage.setItem(
+        "boardData",
+        JSON.stringify([...allBoards, newBoard])
+      );
+    } else {
+      localStorage.setItem("boardData", JSON.stringify(newBoard));
     }
+    navigate(transformBoardNameToPath(newBoard.name));
+    hideModal();
   };
   return (
     <div className="bg-white dark:bg-dark-gray flex flex-col gap-6 w-full">

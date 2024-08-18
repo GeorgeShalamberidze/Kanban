@@ -21,7 +21,6 @@ const initialValues = {
 
 const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
-  console.log(activeBoard);
 
   const handleSubmitAddTask = async (values: {
     title: string;

@@ -10,10 +10,7 @@ const ThemeSwitcher: React.FC = () => {
       className={`${isThemeDark && "dark"} flex w-[80%] items-center mx-auto py-3 justify-center gap-6 bg-light-secondary dark:bg-very-dark-gray rounded-md`}
     >
       <img src={LightThemeIcon} alt="light theme icon" />
-      <label
-        className="inline-flex items-center cursor-pointer"
-        htmlFor="theme-switch"
-      >
+      <label className="inline-flex items-center cursor-pointer">
         <input
           name="theme-switch"
           type="checkbox"

@@ -15,6 +15,7 @@ export interface Task {
 export interface Column {
   name: string;
   tasks: Task[];
+  bgColor: string;
 }
 
 export interface BoardData {

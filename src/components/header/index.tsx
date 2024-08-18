@@ -3,7 +3,6 @@ import { useAtom } from "jotai";
 import KanbanLogo from "@/assets/svg/kanban.svg";
 import useModal from "@/hooks/useModal";
 import Modal from "../modal";
-import AddTask from "../addTask";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 import DropDown from "../dropdown";
@@ -15,6 +14,8 @@ import ThreeDots from "../threeDots";
 import AddNewTask from "./addNewTask";
 import UpArrow from "./upArrow";
 import DownArrow from "./downArrow";
+import BoardIconPurple from "@/assets/svg/icon-board-purple.svg";
+import AddBoardModalView from "../addBoardModalView";
 
 const Header: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
@@ -41,7 +42,7 @@ const Header: React.FC = () => {
           className="flex items-center gap-2 cursor-pointer md:cursor-default"
           onClick={handleOnClick}
         >
-          <p className="text-base sm:text-xl md:text-2xl font-bold truncate max-w-80 text-black dark:text-white">
+          <p className="text-base sm:text-xl md:text-2xl font-bold truncate max-w-72 text-black dark:text-white">
             {activeBoard?.name}
           </p>
           {isDropDownOpen ? <UpArrow /> : <DownArrow />}
@@ -59,6 +60,12 @@ const Header: React.FC = () => {
               <Boards boards={allBoards} />
             </>
           ) : null}
+          <div className="w-[90%]" onClick={openModal}>
+            <div className="flex items-center gap-4 py-4 w-[80%] mx-auto cursor-pointer text-center">
+              <img src={BoardIconPurple} alt="board icon" />
+              <p className="text-main-purple font-bold">+ Create New Board</p>
+            </div>
+          </div>
           <ThemeSwitcher />
         </DropDown>
       )}
@@ -68,7 +75,7 @@ const Header: React.FC = () => {
       </div>
       {isModalOpen && (
         <Modal hideModal={closeModal} className="w-full">
-          <AddTask hideModal={closeModal} />
+          <AddBoardModalView hideModal={closeModal} />
         </Modal>
       )}
     </div>

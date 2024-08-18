@@ -6,25 +6,31 @@ type ColumnPropType = {
   name: string;
   taskLength: number;
   tasks: Task[];
+  bgColor: string;
 };
 
-const Column: React.FC<ColumnPropType> = ({ name, taskLength, tasks }) => {
+const Column: React.FC<ColumnPropType> = ({
+  name,
+  taskLength,
+  tasks,
+  bgColor,
+}) => {
   return (
     <div
       className={twMerge("w-[280px] column flex flex-col gap-[14px] h-full")}
     >
       <div className="flex gap-3 items-center text-medium-gray">
-        <div
-          className={`w-[15px] h-[15px] rounded-full ${
-            name === "Todo"
-              ? "bg-[#49C4E5]"
-              : name === "Doing"
-                ? "bg-[#8471F2]"
-                : name === "Done"
-                  ? "bg-[#67E2AE]"
-                  : ""
-          }`}
-        ></div>
+        <div className="flex gap-3 items-center text-medium-gray">
+          <div
+            className={twMerge(
+              "w-[15px] h-[15px] rounded-full",
+              `bg-[${bgColor}]`
+            )}
+            style={{
+              backgroundColor: bgColor,
+            }}
+          ></div>
+        </div>
         <p>{name}</p>
         <span>{`(${taskLength ?? 0})`}</span>
       </div>

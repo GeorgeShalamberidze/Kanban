@@ -5,6 +5,7 @@
       "columns": [
         {
           "name": "Todo",
+          "bgColor": "#49C4E5",
           "tasks": [
             {
               "title": "Build UI for onboarding flow",
@@ -82,6 +83,7 @@
         },
         {
           "name": "Doing",
+          "bgColor": "#8471F2",
           "tasks": [
             {
               "title": "Design settings and search pages",
@@ -215,6 +217,7 @@
         },
         {
           "name": "Done",
+          "bgColor": "#67E2AE",
           "tasks": [
             {
               "title": "Conduct 5 wireframe tests",
@@ -342,6 +345,7 @@
       "columns": [
         {
           "name": "Todo",
+          "bgColor": "#49C4E5",
           "tasks": [
             {
               "title": "Plan Product Hunt launch",
@@ -436,10 +440,12 @@
         },
         {
           "name": "Doing",
+          "bgColor": "#8471F2",
           "tasks": []
         },
         {
           "name": "Done",
+          "bgColor": "#67E2AE",
           "tasks": []
         }
       ],
@@ -450,6 +456,7 @@
       "columns": [
         {
           "name": "Now",
+          "bgColor": "#B22AE3",
           "tasks": [
             {
               "title": "Launch version one",
@@ -496,10 +503,12 @@
         },
         {
           "name": "Next",
+          "bgColor": "#67E2AE",
           "tasks": []
         },
         {
           "name": "Later",
+          "bgColor": "#57EC64",
           "tasks": []
         }
       ],

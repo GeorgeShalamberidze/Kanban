@@ -31,6 +31,7 @@ const Columns: React.FC<ColumnsPropTypes> = ({ boardData }) => {
           taskLength={column.tasks.length}
           tasks={column.tasks}
           key={i}
+          bgColor={column.bgColor}
         />
       ))}
       <NewColumn maxHeight={maxHeight} />

@@ -1,6 +1,5 @@
 import BoardIcon from "@/assets/svg/icon-board.svg";
 import BoardIconWhite from "@/assets/svg/icon-board-white.svg";
-import BoardIconPurple from "@/assets/svg/icon-board-purple.svg";
 import { twMerge } from "tailwind-merge";
 import { activeBoardAtom } from "@/store/board";
 import { useAtom } from "jotai";
@@ -11,10 +10,14 @@ import useModal from "@/hooks/useModal";
 import Modal from "../modal";
 import AddBoardModalView from "../addBoardModalView";
 
-const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
+type BoardsPropType = {
+  boards: Array<BoardData>;
+};
+
+const Boards: React.FC<BoardsPropType> = ({ boards }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
   const navigate = useNavigate();
-  const { closeModal, isModalOpen, openModal } = useModal();
+  const { closeModal, isModalOpen } = useModal();
 
   return (
     <div className="flex flex-col w-full mx-auto flex-1 overflow-y-auto no-scrollbar">
@@ -47,12 +50,7 @@ const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
           </div>
         </div>
       ))}
-      <div className="w-[90%]" onClick={openModal}>
-        <div className="flex items-center gap-4 py-4 w-[80%] mx-auto cursor-pointer text-center">
-          <img src={BoardIconPurple} alt="board icon" />
-          <p className="text-main-purple font-bold">+ Create New Board</p>
-        </div>
-      </div>
+
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
           <AddBoardModalView hideModal={closeModal} />

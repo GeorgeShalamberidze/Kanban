@@ -4,16 +4,20 @@ import DropDown from "../dropdown";
 import Button from "../button";
 import useModal from "@/hooks/useModal";
 import Modal from "../modal";
-import { activeBoardAtom } from "@/store/board";
+import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { useAtom } from "jotai";
 import EditBoardThreeDots from "./editBoard";
 import { twMerge } from "tailwind-merge";
 import DeleteBoardModalView from "../deleteBoardModalView";
+import { useNavigate } from "react-router-dom";
+import { DASHBOARD_PATHS } from "@/routes/route.enum";
 
 const ThreeDots: React.FC = () => {
   const { isDropDownOpen, closeDropDown, openDropDown } = useDropDown();
   const { isModalOpen, closeModal, openModal } = useModal();
   const [activeBoard] = useAtom(activeBoardAtom);
+  const [allBoards] = useAtom(allBoardsAtom);
+  const navigate = useNavigate();
 
   return (
     <div className="relative flex justify-center">
@@ -41,6 +45,9 @@ const ThreeDots: React.FC = () => {
             onClick={() => {
               closeDropDown();
               openModal();
+              if (allBoards?.length === 1) {
+                navigate(DASHBOARD_PATHS.ROOT);
+              }
             }}
           />
         </DropDown>
