@@ -157,7 +157,7 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
               <Button
                 type="submit"
                 title="Create Task"
-                className="w-full mb-4 flex items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white font-bold text-base"
+                className="w-full mb-8 flex items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white font-bold text-base"
               />
             </Form>
           );

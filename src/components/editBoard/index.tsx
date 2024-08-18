@@ -6,12 +6,14 @@ import { useAtom } from "jotai";
 import Button from "../button";
 import { FieldArray, Form, Formik } from "formik";
 import { Column } from "@/api/boards/index.types";
+import { generateRandomColor } from "@/helpers/generateRandomColor";
 
 const EditBoardModalView: React.FC<{
   hideModal: () => void;
-  hideDropDown: () => void;
-  isDropDownOpen: boolean;
-}> = ({ hideModal, hideDropDown, isDropDownOpen }) => {
+  hideDropDown?: () => void;
+  isDropDownOpen?: boolean;
+  isColumnUpdate?: boolean;
+}> = ({ hideModal, hideDropDown, isDropDownOpen, isColumnUpdate = false }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
   const [_, setAllBoards] = useAtom(allBoardsAtom);
 
@@ -21,7 +23,9 @@ const EditBoardModalView: React.FC<{
   }) => {
     const updatedColumns = [
       ...(values?.boardColumns || []).map((column: Column) =>
-        column.tasks ? column : { name: column.name, tasks: [] }
+        column.tasks
+          ? column
+          : { name: column.name, tasks: [], bgColor: generateRandomColor() }
       ),
     ];
 
@@ -38,36 +42,40 @@ const EditBoardModalView: React.FC<{
       };
     });
 
-    setAllBoards((prev) => {
-      if (!prev) return prev;
+    if (isColumnUpdate) {
+      setAllBoards((prev) => {
+        if (!prev) return prev;
 
-      const boardIndex = prev?.findIndex(
-        (board) => board.name === activeBoard?.name
-      );
+        const boardIndex = prev?.findIndex(
+          (board) => board.name === activeBoard?.name
+        );
 
-      if (boardIndex === -1) return prev;
+        if (boardIndex === -1) return prev;
 
-      const updatedBoards = prev.map((board, index) =>
-        index === boardIndex
-          ? {
-              ...board,
-              name: values.boardName ? values.boardName : board.name,
-            }
-          : board
-      );
+        const updatedBoards = prev.map((board, index) =>
+          index === boardIndex
+            ? {
+                ...board,
+                name: values.boardName ? values.boardName : board.name,
+              }
+            : board
+        );
 
-      return updatedBoards;
-    });
+        return updatedBoards;
+      });
+    }
 
     hideModal();
     if (isDropDownOpen) {
-      hideDropDown();
+      hideDropDown?.();
     }
   };
 
   return (
     <div className="flex-1 flex flex-col gap-6">
-      <p className="font-bold text-xl text-black dark:text-white">Edit Board</p>
+      <p className="font-bold text-xl text-black dark:text-white">
+        {isColumnUpdate ? "Edit Columns" : "Edit Board"}
+      </p>
       <Formik
         enableReinitialize
         initialValues={{
@@ -79,12 +87,14 @@ const EditBoardModalView: React.FC<{
         {({ values }) => {
           return (
             <Form className="flex flex-col gap-6 w-full">
-              <Input
-                className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-                name={ADD_BOARD_FORM_FIELDS.board.name}
-                label="Board Name"
-                id={ADD_BOARD_FORM_FIELDS.board.name}
-              />
+              {!isColumnUpdate ? (
+                <Input
+                  className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
+                  name={ADD_BOARD_FORM_FIELDS.board.name}
+                  label="Board Name"
+                  id={ADD_BOARD_FORM_FIELDS.board.name}
+                />
+              ) : null}
 
               <FieldArray name="boardColumns">
                 {({ remove, push }) => {
@@ -134,7 +144,7 @@ const EditBoardModalView: React.FC<{
               <Button
                 type="submit"
                 title="Save Changes"
-                className="w-full flex mb-4 items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white text-base font-bold"
+                className="w-full flex mb-8 items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white text-base font-bold"
               />
             </Form>
           );

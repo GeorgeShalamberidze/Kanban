@@ -17,7 +17,7 @@ const NoColumns: React.FC = () => {
       />
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
-          <EditBoardModalView />
+          <EditBoardModalView hideModal={closeModal} />
         </Modal>
       ) : null}
     </div>
