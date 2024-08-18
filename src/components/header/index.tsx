@@ -33,8 +33,6 @@ const Header: React.FC = () => {
     setIsDropDownOpen(false);
   };
 
-  console.log(allBoards);
-
   return (
     <div className="w-full min-h-fit h-[97px] flex items-center gap-2 justify-between border-b border-solid border-lines-light dark:border-lines-dark bg-white dark:bg-dark-gray px-4 md:px-8 relative">
       <div className="flex gap-4 items-center">
@@ -70,7 +68,7 @@ const Header: React.FC = () => {
       </div>
       {isModalOpen && (
         <Modal hideModal={closeModal} className="w-full">
-          <AddTask />
+          <AddTask hideModal={closeModal} />
         </Modal>
       )}
     </div>

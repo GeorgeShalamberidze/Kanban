@@ -6,6 +6,7 @@ import Cross from "@/assets/svg/icon-cross.svg";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
 import { activeBoardAtom } from "@/store/board";
 import { Field, FieldArray, Form, Formik } from "formik";
+import { v4 as uuidv4 } from "uuid";
 
 const initialValues = {
   title: "",
@@ -18,11 +19,41 @@ const initialValues = {
   status: "",
 };
 
-const AddTask: React.FC = () => {
-  const [activeBoard] = useAtom(activeBoardAtom);
+const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
+  const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
 
-  const handleSubmitAddTask = async (values: any) => {
-    console.log(values);
+  const handleSubmitAddTask = async (values: {
+    title: string;
+    description: string;
+    subtasks: {
+      task: string;
+    }[];
+    status: string;
+  }) => {
+    if (!activeBoard) return;
+    /** Create the new task with unique IDs */
+    const modifiedTask = {
+      ...values,
+      id: uuidv4(),
+      subtasks: values.subtasks.map((task) => ({
+        id: uuidv4(),
+        title: task.task,
+        isCompleted: false,
+      })),
+    };
+
+    /** Update the activeBoard with the new task added to the appropriate column */
+    const modifiedActiveBoard = {
+      ...activeBoard,
+      columns: activeBoard?.columns.map((column) =>
+        column.name === values.status
+          ? { ...column, tasks: [...column.tasks, modifiedTask] }
+          : column
+      ),
+    };
+
+    setActiveBoard(modifiedActiveBoard);
+    hideModal();
   };
 
   return (
@@ -47,7 +78,7 @@ const AddTask: React.FC = () => {
                 placeholder={ADD_TASK_FORM_FIELDS.description.placeholder}
               />
               <FieldArray name="subtasks">
-                {({ insert, remove, push }) => {
+                {({ remove, push }) => {
                   return (
                     <div className="flex flex-col gap-3">
                       <label
@@ -57,14 +88,14 @@ const AddTask: React.FC = () => {
                         {ADD_TASK_FORM_FIELDS.subtasks.label}
                       </label>
                       {values.subtasks.length > 0 &&
-                        values.subtasks.map((task, i) => (
+                        values.subtasks.map((_, i) => (
                           <div
                             className="flex items-center justify-between gap-4 w-full"
                             key={i}
                           >
                             <Input
                               className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-                              name={ADD_TASK_FORM_FIELDS.subtasks.name}
+                              name={`subtasks.${i}.task`}
                               placeholder={
                                 ADD_TASK_FORM_FIELDS.subtasks.placeholder
                               }
@@ -98,6 +129,9 @@ const AddTask: React.FC = () => {
                     className="appearance-none border border-solid border-[#828fa35e] cursor-pointer outline-none rounded-md py-2 px-4 bg-white dark:bg-dark-gray text-black dark:text-white"
                     name={ADD_TASK_FORM_FIELDS.status.name}
                   >
+                    <option value="" disabled>
+                      Select status
+                    </option>{" "}
                     {activeBoard?.columns.map((column, i) => (
                       <option key={i} value={column.name}>
                         {column.name}
@@ -115,7 +149,6 @@ const AddTask: React.FC = () => {
                 type="submit"
                 title="Create Task"
                 className="w-full mb-4 flex items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white font-bold text-base"
-                onClick={() => console.log("Create TASK ! Todo")}
               />
             </Form>
           );
