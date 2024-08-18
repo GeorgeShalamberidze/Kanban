@@ -13,6 +13,7 @@ import Input from "../input";
 import { ADD_BOARD_FORM_FIELDS } from "./formFields";
 import Cross from "@/assets/svg/icon-cross.svg";
 import Button from "../button";
+import AddBoardModalView from "../addBoardModalView";
 
 const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
@@ -20,7 +21,7 @@ const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
   const { closeModal, isModalOpen, openModal } = useModal();
 
   return (
-    <div className="flex flex-col w-full mx-auto flex-1">
+    <div className="flex flex-col w-full mx-auto flex-1 overflow-y-auto no-scrollbar">
       {boards.map((item, i) => (
         <div
           key={i}
@@ -58,57 +59,7 @@ const Boards: React.FC<{ boards: Array<BoardData> }> = ({ boards }) => {
       </div>
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
-          <div className="bg-white dark:bg-dark-gray flex flex-col gap-6 w-full">
-            <div className="text-black dark:text-white font-bold text-lg">
-              Add New Board
-            </div>
-            <Input
-              className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-              label={ADD_BOARD_FORM_FIELDS.board.label}
-              name={ADD_BOARD_FORM_FIELDS.board.name}
-              placeholder={ADD_BOARD_FORM_FIELDS.board.placeholder}
-            />
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between gap-4 w-full">
-                <Input
-                  className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-                  label={ADD_BOARD_FORM_FIELDS.board_columns.label}
-                  name={ADD_BOARD_FORM_FIELDS.board_columns.name}
-                  placeholder={ADD_BOARD_FORM_FIELDS.board_columns.placeholder}
-                />
-                <img
-                  src={Cross}
-                  alt="x button"
-                  className="mt-8 cursor-pointer"
-                  onClick={() => console.log("delete board todo")}
-                />
-              </div>
-              <div className="flex items-center justify-between gap-4 w-full">
-                <Input
-                  required
-                  className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-                  name={ADD_BOARD_FORM_FIELDS.board_columns.name}
-                  placeholder={ADD_BOARD_FORM_FIELDS.board_columns.placeholder}
-                />
-                <img
-                  src={Cross}
-                  alt="x button"
-                  className="cursor-pointer"
-                  onClick={() => console.log("delete subtask todo")}
-                />
-              </div>
-              <Button
-                title="+ Add New Column"
-                className="w-full flex items-center justify-center py-2 rounded-full bg-[#635FC7]/10 dark:bg-white hover:opacity-75 text-main-purple font-bold text-base"
-                onClick={() => console.log("Add new Column ! Todo")}
-              />
-            </div>
-            <Button
-              title="Create New Board"
-              className="w-full flex items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white font-bold text-base"
-              onClick={() => console.log("Add new Column ! Todo")}
-            />
-          </div>
+          <AddBoardModalView hideModal={closeModal} />
         </Modal>
       ) : null}
     </div>
