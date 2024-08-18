@@ -10,9 +10,6 @@ const EditBoardThreeDots: React.FC<{
   const { isModalOpen, closeModal, openModal } = useModal();
 
   const handleClick = () => {
-    if (isDropDownOpen) {
-      closeDropDown();
-    }
     openModal();
   };
 
@@ -25,7 +22,11 @@ const EditBoardThreeDots: React.FC<{
       />
       {isModalOpen ? (
         <Modal hideModal={closeModal}>
-          <EditBoardModalView />
+          <EditBoardModalView
+            hideModal={closeModal}
+            hideDropDown={closeDropDown}
+            isDropDownOpen={isDropDownOpen}
+          />
         </Modal>
       ) : null}
     </>

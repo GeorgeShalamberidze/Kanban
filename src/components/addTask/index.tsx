@@ -21,6 +21,7 @@ const initialValues = {
 
 const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
+  console.log(activeBoard);
 
   const handleSubmitAddTask = async (values: {
     title: string;
@@ -30,7 +31,7 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
     }[];
     status: string;
   }) => {
-    if (!activeBoard) return;
+    if (!activeBoard || !values.title.trim().length) return;
     /** Create the new task with unique IDs */
     const modifiedTask = {
       ...values,
@@ -66,23 +67,27 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
           return (
             <Form className="flex flex-col gap-6 w-full">
               <Input
+                required
                 className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
                 label={ADD_TASK_FORM_FIELDS.title.label}
                 name={ADD_TASK_FORM_FIELDS.title.name}
                 placeholder={ADD_TASK_FORM_FIELDS.title.placeholder}
+                id={ADD_TASK_FORM_FIELDS.title.name}
               />
               <Input
+                required
                 className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
                 label={ADD_TASK_FORM_FIELDS.description.label}
                 name={ADD_TASK_FORM_FIELDS.description.name}
                 placeholder={ADD_TASK_FORM_FIELDS.description.placeholder}
+                id={ADD_TASK_FORM_FIELDS.description.name}
               />
               <FieldArray name="subtasks">
                 {({ remove, push }) => {
                   return (
                     <div className="flex flex-col gap-3">
                       <label
-                        className="text-lg text-medium-gray"
+                        className="text-lg text-medium-gray dark:text-white"
                         htmlFor={ADD_TASK_FORM_FIELDS.subtasks.label}
                       >
                         {ADD_TASK_FORM_FIELDS.subtasks.label}
@@ -94,11 +99,13 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
                             key={i}
                           >
                             <Input
+                              required
                               className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
                               name={`subtasks.${i}.task`}
                               placeholder={
                                 ADD_TASK_FORM_FIELDS.subtasks.placeholder
                               }
+                              id={`subtasks.${i}.task`}
                             />
                             <img
                               src={Cross}
@@ -119,7 +126,7 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
               </FieldArray>
               <div className="relative">
                 <label
-                  className="flex flex-col text-lg text-medium-gray gap-2"
+                  className="flex flex-col text-lg text-medium-gray dark:text-white gap-2"
                   htmlFor={ADD_TASK_FORM_FIELDS.status.name}
                 >
                   {ADD_TASK_FORM_FIELDS.status.label}
@@ -128,6 +135,7 @@ const AddTask: React.FC<{ hideModal: () => void }> = ({ hideModal }) => {
                     as="select"
                     className="appearance-none border border-solid border-[#828fa35e] cursor-pointer outline-none rounded-md py-2 px-4 bg-white dark:bg-dark-gray text-black dark:text-white"
                     name={ADD_TASK_FORM_FIELDS.status.name}
+                    id={ADD_TASK_FORM_FIELDS.status.name}
                   >
                     <option value="" disabled>
                       Select status

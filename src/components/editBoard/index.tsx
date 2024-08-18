@@ -7,11 +7,13 @@ import Button from "../button";
 import { FieldArray, Form, Formik } from "formik";
 import { Column } from "@/api/boards/index.types";
 
-const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
-  hideModal,
-}) => {
+const EditBoardModalView: React.FC<{
+  hideModal: () => void;
+  hideDropDown: () => void;
+  isDropDownOpen: boolean;
+}> = ({ hideModal, hideDropDown, isDropDownOpen }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
-  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
+  const [_, setAllBoards] = useAtom(allBoardsAtom);
 
   const handleSubmit = (values: {
     boardName: string | undefined;
@@ -58,11 +60,14 @@ const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
     });
 
     hideModal();
+    if (isDropDownOpen) {
+      hideDropDown();
+    }
   };
 
   return (
     <div className="flex-1 flex flex-col gap-6">
-      <p className="font-bold text-xl">Edit Board</p>
+      <p className="font-bold text-xl text-black dark:text-white">Edit Board</p>
       <Formik
         enableReinitialize
         initialValues={{
@@ -75,8 +80,10 @@ const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
           return (
             <Form className="flex flex-col gap-6 w-full">
               <Input
+                className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
                 name={ADD_BOARD_FORM_FIELDS.board.name}
                 label="Board Name"
+                id={ADD_BOARD_FORM_FIELDS.board.name}
               />
 
               <FieldArray name="boardColumns">
@@ -84,7 +91,7 @@ const EditBoardModalView: React.FC<{ hideModal: () => void }> = ({
                   return (
                     <div className="flex flex-col gap-3">
                       <label
-                        className="text-lg text-medium-gray"
+                        className="text-lg text-medium-gray dark:text-white"
                         htmlFor={ADD_BOARD_FORM_FIELDS.board_columns.label}
                       >
                         {ADD_BOARD_FORM_FIELDS.board_columns.label}
