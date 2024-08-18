@@ -125,7 +125,6 @@ const ColumnCards: React.FC<ColumnCardPropType> = ({ tasks, columnName }) => {
           (task) => task.isCompleted
         ).length;
         const subTaskCount = task.subtasks.length;
-        console.log(task);
         return (
           <Card
             columnName={columnName}

@@ -52,6 +52,7 @@ const Card: React.FC<CardPropType> = ({
             description={description}
             status={status}
             subTasks={subTasks}
+            completedSubTaskCount={completedSubTaskCount}
           />
         </Modal>
       )}
