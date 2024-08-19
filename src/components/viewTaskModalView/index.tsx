@@ -9,7 +9,7 @@ import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
 import Dots from "@/assets/svg/vertical-dots.svg";
 import Checkbox from "../checkbox";
 
-type EditTaskModalViewPropType = {
+type ViewTaskModalViewPropType = {
   id: string;
   title: string;
   description: string;
@@ -19,7 +19,7 @@ type EditTaskModalViewPropType = {
   hideModal: () => void;
 };
 
-const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
+const ViewTaskModalView: React.FC<ViewTaskModalViewPropType> = ({
   id,
   description,
   status,
@@ -175,4 +175,4 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
   );
 };
 
-export default EditTaskModalView;
+export default ViewTaskModalView;

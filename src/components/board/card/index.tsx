@@ -1,5 +1,5 @@
 import DropIndicator from "@/components/dropIndicator";
-import EditTaskModalView from "@/components/editTaskModalView";
+import ViewTaskModalView from "@/components/viewTaskModalView";
 import Modal from "@/components/modal";
 import useModal from "@/hooks/useModal";
 import { Subtask } from "@/api/boards/index.types";
@@ -33,8 +33,9 @@ const Card: React.FC<CardPropType> = ({
   return (
     <>
       <DropIndicator beforeId={id} column={columnName} />
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         <motion.div
+          key={id}
           layout
           draggable
           layoutId={id}
@@ -50,7 +51,7 @@ const Card: React.FC<CardPropType> = ({
       </AnimatePresence>
       {isModalOpen && (
         <Modal hideModal={closeModal}>
-          <EditTaskModalView
+          <ViewTaskModalView
             id={id}
             title={title}
             description={description}
