@@ -43,8 +43,9 @@ const AddBoardModalView: React.FC<{
         JSON.stringify([...allBoards, newBoard])
       );
     } else {
-      localStorage.setItem("boardData", JSON.stringify(newBoard));
+      localStorage.setItem("boardData", JSON.stringify([newBoard]));
     }
+    localStorage.setItem("activeBoard", JSON.stringify(newBoard));
     navigate(transformBoardNameToPath(newBoard.name));
     hideModal();
   };

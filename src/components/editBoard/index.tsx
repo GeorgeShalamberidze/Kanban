@@ -5,7 +5,7 @@ import Cross from "@/assets/svg/icon-cross.svg";
 import { useAtom } from "jotai";
 import Button from "../button";
 import { FieldArray, Form, Formik } from "formik";
-import { Column } from "@/api/boards/index.types";
+import { BoardData, Column } from "@/api/boards/index.types";
 import { generateRandomColor } from "@/helpers/generateRandomColor";
 
 const EditBoardModalView: React.FC<{
@@ -15,7 +15,7 @@ const EditBoardModalView: React.FC<{
   isColumnUpdate?: boolean;
 }> = ({ hideModal, hideDropDown, isDropDownOpen, isColumnUpdate = false }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
-  const [_, setAllBoards] = useAtom(allBoardsAtom);
+  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
 
   const handleSubmit = (values: {
     boardName: string | undefined;
@@ -29,40 +29,46 @@ const EditBoardModalView: React.FC<{
       ),
     ];
 
+    const updatedBoard = {
+      ...activeBoard,
+      name:
+        values.boardName && values.boardName !== activeBoard?.name
+          ? values.boardName
+          : activeBoard?.name!,
+      columns: updatedColumns,
+    };
+
+    const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
+      board.id === updatedBoard.id ? updatedBoard : board
+    );
     setActiveBoard((prev) => {
       if (!prev) return prev;
 
-      return {
-        ...prev,
-        name:
-          values.boardName && values.boardName !== prev.name
-            ? values.boardName
-            : prev.name,
-        columns: updatedColumns,
-      };
+      return { ...prev, ...updatedBoard };
     });
 
+    localStorage.setItem("boardData", JSON.stringify(updatedBoardDataArray));
+    localStorage.setItem("activeBoard", JSON.stringify(updatedBoard));
+
     if (isColumnUpdate) {
+      const boardIndex = allBoards?.findIndex(
+        (board) => board.name === activeBoard?.name
+      );
+
+      const updatedBoards = allBoards?.map((board, index) =>
+        index === boardIndex
+          ? {
+              ...board,
+              name: values.boardName ? values.boardName : board.name,
+            }
+          : board
+      );
+
       setAllBoards((prev) => {
         if (!prev) return prev;
-
-        const boardIndex = prev?.findIndex(
-          (board) => board.name === activeBoard?.name
-        );
-
-        if (boardIndex === -1) return prev;
-
-        const updatedBoards = prev.map((board, index) =>
-          index === boardIndex
-            ? {
-                ...board,
-                name: values.boardName ? values.boardName : board.name,
-              }
-            : board
-        );
-
         return updatedBoards;
       });
+      localStorage.setItem("activeBoard", JSON.stringify(updatedBoard));
     }
 
     hideModal();

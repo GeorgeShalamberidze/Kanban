@@ -4,9 +4,10 @@ import Input from "../input";
 import { ADD_TASK_FORM_FIELDS } from "./formFields";
 import Cross from "@/assets/svg/icon-cross.svg";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
-import { activeBoardAtom } from "@/store/board";
+import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
+import { BoardData } from "@/api/boards/index.types";
 
 const initialValues = {
   title: "",
@@ -23,6 +24,7 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
   hideModal,
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
+  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
 
   const handleSubmitAddTask = async (values: {
     title: string;
@@ -54,6 +56,14 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
       ),
     };
 
+    const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
+      board.id === modifiedActiveBoard.id ? modifiedActiveBoard : board
+    );
+
+    localStorage.setItem("activeBoard", JSON.stringify(modifiedActiveBoard));
+    localStorage.setItem("boardData", JSON.stringify(updatedBoardDataArray));
+
+    setAllBoards(updatedBoardDataArray);
     setActiveBoard(modifiedActiveBoard);
     hideModal();
   };

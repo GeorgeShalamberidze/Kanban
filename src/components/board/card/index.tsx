@@ -39,7 +39,7 @@ const Card: React.FC<CardPropType> = ({
           layout
           draggable
           layoutId={id}
-          onDragStart={(e: any) => handleDragStart(e, { id, title })}
+          onDragStart={(e: any) => handleDragStart(e, { id, title, status })}
           className="bg-white dark:bg-dark-gray rounded-lg shadow-md px-4 py-[23px] cursor-pointer flex flex-col gap-2 active:cursor-grabbing"
           onClick={openModal}
         >

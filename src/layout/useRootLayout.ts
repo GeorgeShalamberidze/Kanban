@@ -18,7 +18,7 @@ export const useRootLayout = () => {
   const { boardName } = useParams();
 
   const updateActiveBoard = (boardData: BoardData[], boardName: string) => {
-    const activeProject = boardData.find(
+    const activeProject = boardData?.find(
       (project: BoardData) =>
         project.name.toLowerCase() ===
         boardName.split("-").join(" ").toLowerCase()

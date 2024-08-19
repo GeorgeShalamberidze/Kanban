@@ -11,13 +11,13 @@ const DeleteBoardModalView: React.FC<{ closeModal: () => void }> = ({
   const handleDeleteBoard = () => {
     if (allBoards && activeBoard) {
       const updatedBoards = allBoards.filter(
-        (board) => board.name !== activeBoard.name
+        (board) => board.id !== activeBoard.id
       );
 
       setAllBoards(updatedBoards);
 
       if (updatedBoards.length > 0) {
-        setActiveBoard(updatedBoards[0]);
+        setActiveBoard(updatedBoards[0] ?? []);
         localStorage.setItem("activeBoard", JSON.stringify(updatedBoards[0]));
       } else {
         setActiveBoard(undefined);

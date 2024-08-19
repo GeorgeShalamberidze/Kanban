@@ -1,9 +1,9 @@
-import { Column, Subtask, Task } from "@/api/boards/index.types";
+import { BoardData, Column, Subtask, Task } from "@/api/boards/index.types";
 import { Field, Form, Formik } from "formik";
 import { twMerge } from "tailwind-merge";
 import { EDIT_TASK_FORM_FIELDS } from "./formFields";
 import { useAtom } from "jotai";
-import { activeBoardAtom } from "@/store/board";
+import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import Button from "../button";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
 import Dots from "@/assets/svg/vertical-dots.svg";
@@ -29,6 +29,7 @@ const ViewTaskModalView: React.FC<ViewTaskModalViewPropType> = ({
   hideModal,
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
+  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
 
   const handleEditTask = (values: {
     currentStatus: string;
@@ -84,9 +85,17 @@ const ViewTaskModalView: React.FC<ViewTaskModalViewPropType> = ({
       }),
     };
 
-    hideModal();
+    const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
+      board.id === updatedBoardData.id ? updatedBoardData : board
+    );
+
+    setAllBoards(updatedBoardDataArray);
     setActiveBoard(updatedBoardData);
+
+    localStorage.setItem("boardData", JSON.stringify(updatedBoardDataArray));
     localStorage.setItem("activeBoard", JSON.stringify(updatedBoardData));
+
+    hideModal();
   };
 
   return (
