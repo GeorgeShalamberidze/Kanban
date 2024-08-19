@@ -4,13 +4,13 @@ import { twMerge } from "tailwind-merge";
 import { EDIT_TASK_FORM_FIELDS } from "./formFields";
 import { useAtom } from "jotai";
 import { activeBoardAtom } from "@/store/board";
-import Input from "../input";
 import Button from "../button";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
 import Dots from "@/assets/svg/vertical-dots.svg";
 import Checkbox from "../checkbox";
 
 type EditTaskModalViewPropType = {
+  id: string;
   title: string;
   description: string;
   status: string;
@@ -19,6 +19,7 @@ type EditTaskModalViewPropType = {
 };
 
 const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
+  id,
   description,
   status,
   subTasks,
@@ -27,8 +28,33 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
 
-  const handleEditTask = (values: any) => {
-    console.log(values);
+  const handleEditTask = (values: {
+    currentStatus: string;
+    subTasks: Subtask[];
+  }) => {
+    console.log(values.subTasks);
+    setActiveBoard((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        columns: prev.columns.map((column) =>
+          column.name === status
+            ? {
+                ...column,
+                tasks: column.tasks.map((task) =>
+                  task.id === id
+                    ? {
+                        ...task,
+                        subtasks: values.subTasks,
+                      }
+                    : task
+                ),
+              }
+            : column
+        ),
+      };
+    });
   };
 
   return (
@@ -57,7 +83,7 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
           }}
           onSubmit={handleEditTask}
         >
-          {({ values }) => {
+          {({ values, handleChange }) => {
             return (
               <Form className="flex flex-col gap-6 w-full">
                 <div className="flex flex-col gap-2">
@@ -66,11 +92,13 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
                     values.subTasks.map((task, i) => {
                       return (
                         <Checkbox
-                          className="cursor-pointer"
+                          handleChange={handleChange}
                           key={i}
+                          isCompleted={task.isCompleted}
                           label={task.title}
-                          // value={task.isCompleted}
-                          name="toggle"
+                          className="cursor-pointer"
+                          name={`subTasks.${i}.isCompleted`}
+                          id={`subTasks.${i}.isCompleted`}
                         />
                       );
                     })}

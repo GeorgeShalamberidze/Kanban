@@ -48,6 +48,7 @@ const Card: React.FC<CardPropType> = ({
       {isModalOpen && (
         <Modal hideModal={closeModal}>
           <EditTaskModalView
+            id={id}
             title={title}
             description={description}
             status={status}
