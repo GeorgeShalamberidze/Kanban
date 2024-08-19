@@ -23,8 +23,6 @@ const Columns: React.FC<ColumnsPropTypes> = ({ boardData }) => {
     }
   }, [boardData]);
 
-  console.log("boardData: ", boardData);
-
   return (
     <div className="flex gap-6 px-4 py-6 pb-5 h-full" ref={containerRef}>
       {boardData?.columns.map((column, i) => (

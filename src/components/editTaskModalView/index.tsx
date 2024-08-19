@@ -1,4 +1,4 @@
-import { Subtask } from "@/api/boards/index.types";
+import { Column, Subtask, Task } from "@/api/boards/index.types";
 import { Field, Form, Formik } from "formik";
 import { twMerge } from "tailwind-merge";
 import { EDIT_TASK_FORM_FIELDS } from "./formFields";
@@ -16,6 +16,7 @@ type EditTaskModalViewPropType = {
   status: string;
   subTasks: Subtask[];
   completedSubTaskCount: number;
+  hideModal: () => void;
 };
 
 const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
@@ -25,6 +26,7 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
   subTasks,
   completedSubTaskCount,
   title,
+  hideModal,
 }) => {
   const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
 
@@ -32,29 +34,59 @@ const EditTaskModalView: React.FC<EditTaskModalViewPropType> = ({
     currentStatus: string;
     subTasks: Subtask[];
   }) => {
-    console.log(values.subTasks);
-    setActiveBoard((prev) => {
-      if (!prev) return prev;
+    if (!activeBoard) return;
 
-      return {
-        ...prev,
-        columns: prev.columns.map((column) =>
-          column.name === status
-            ? {
-                ...column,
-                tasks: column.tasks.map((task) =>
-                  task.id === id
-                    ? {
-                        ...task,
-                        subtasks: values.subTasks,
-                      }
-                    : task
-                ),
-              }
-            : column
-        ),
-      };
-    });
+    const sourceColumn = activeBoard.columns.find(
+      (column) => column.name === status
+    );
+    const targetColumn = activeBoard.columns.find(
+      (column) => column.name === values.currentStatus
+    );
+
+    if (!sourceColumn || !targetColumn) return;
+
+    const updatedSourceColumn: Column = {
+      ...sourceColumn,
+      tasks:
+        sourceColumn.name === values.currentStatus
+          ? sourceColumn.tasks.map((task) =>
+              task.id === id
+                ? {
+                    ...task,
+                    subtasks: values.subTasks,
+                  }
+                : task
+            )
+          : sourceColumn.tasks.filter((task) => task.id !== id),
+    };
+
+    const updatedTargetTask = {
+      ...(sourceColumn.tasks.find((task) => task.id === id) as Task),
+      subtasks: values.subTasks,
+      status: values.currentStatus,
+    };
+
+    const updatedTargetColumn = {
+      ...targetColumn,
+      tasks: [...targetColumn.tasks, updatedTargetTask],
+    };
+
+    const updatedBoardData = {
+      ...activeBoard,
+      columns: activeBoard.columns.map((column) => {
+        if (column.name === status) {
+          return updatedSourceColumn;
+        } else if (column.name === values.currentStatus) {
+          return updatedTargetColumn;
+        } else {
+          return column;
+        }
+      }),
+    };
+
+    hideModal();
+    setActiveBoard(updatedBoardData);
+    localStorage.setItem("activeBoard", JSON.stringify(updatedBoardData));
   };
 
   return (
