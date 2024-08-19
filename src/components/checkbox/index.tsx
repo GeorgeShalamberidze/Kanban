@@ -22,34 +22,31 @@ const Checkbox: React.FC<CheckboxPropType> = ({
   ...rest
 }) => {
   return (
-    <div
-      className="w-full bg-light-secondary dark:bg-very-dark-gray p-3 rounded-lg cursor-pointer flex items-center gap-4 font-bold"
-      onChange={handleChange}
-      id={id}
-    >
-      <Field
-        type="checkbox"
+    label && (
+      <label
         className={twMerge(
-          "appearance-none w-4 h-4 border border-solid border-[#828FA3]/25 rounded-sm",
-          className
+          "text-sm cursor-pointer text-medium-gray w-full bg-light-secondary dark:bg-very-dark-gray p-3 rounded-lg flex items-center gap-4 font-bold",
+          `${isCompleted ? "line-through text-medium-gray" : "text-dark dark:text-white"}`
         )}
-        id={id}
-        name={name}
-        {...rest}
-      />
-      {isCompleted && <img className="absolute" src={CheckboxIcon} />}
-      {label && (
-        <label
+        htmlFor={id}
+      >
+        <Field
+          type="checkbox"
           className={twMerge(
-            "text-sm text-medium-gray cursor-pointer dark:text-white",
-            `${isCompleted ? "line-through" : "text-dark"}`
+            "appearance-none min-w-4 min-h-4 w-4 h-4 border border-solid border-[#828FA3]/25 rounded-sm",
+            className
           )}
-          htmlFor={id}
-        >
-          {label}
-        </label>
-      )}
-    </div>
+          id={id}
+          name={name}
+          {...rest}
+        />
+        {isCompleted && (
+          <img className="absolute flex-1 flex" src={CheckboxIcon} />
+        )}
+
+        {label}
+      </label>
+    )
   );
 };
 
