@@ -1,13 +1,10 @@
-import { useAtom } from "jotai";
 import Button from "../button";
 import Input from "../input";
 import { ADD_TASK_FORM_FIELDS } from "./formFields";
 import Cross from "@/assets/svg/icon-cross.svg";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
-import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { Field, FieldArray, Form, Formik } from "formik";
-import { v4 as uuidv4 } from "uuid";
-import { BoardData } from "@/api/boards/index.types";
+import { useAddTask } from "./useAddTask";
 
 const initialValues = {
   title: "",
@@ -23,50 +20,7 @@ const initialValues = {
 const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
   hideModal,
 }) => {
-  const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
-  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
-
-  const handleSubmitAddTask = async (values: {
-    title: string;
-    description: string;
-    subtasks: {
-      task: string;
-    }[];
-    status: string;
-  }) => {
-    if (!activeBoard || !values.title.trim().length) return;
-    /** Create the new task with unique IDs */
-    const modifiedTask = {
-      ...values,
-      id: uuidv4(),
-      subtasks: values.subtasks.map((task) => ({
-        id: uuidv4(),
-        title: task.task,
-        isCompleted: false,
-      })),
-    };
-
-    /** Update the activeBoard with the new task added to the appropriate column */
-    const modifiedActiveBoard = {
-      ...activeBoard,
-      columns: activeBoard?.columns.map((column) =>
-        column.name === values.status
-          ? { ...column, tasks: [...column.tasks, modifiedTask] }
-          : column
-      ),
-    };
-
-    const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
-      board.id === modifiedActiveBoard.id ? modifiedActiveBoard : board
-    );
-
-    localStorage.setItem("activeBoard", JSON.stringify(modifiedActiveBoard));
-    localStorage.setItem("boardData", JSON.stringify(updatedBoardDataArray));
-
-    setAllBoards(updatedBoardDataArray);
-    setActiveBoard(modifiedActiveBoard);
-    hideModal();
-  };
+  const { activeBoard, handleSubmitAddTask } = useAddTask({ hideModal });
 
   return (
     <div className="bg-white dark:bg-dark-gray flex flex-col gap-6 w-full">

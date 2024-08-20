@@ -26,7 +26,7 @@ const AddNewTask: React.FC = () => {
         </p>
       </button>
       {isModalOpen && (
-        <Modal hideModal={closeModal} className="w-full">
+        <Modal hideModal={closeModal}>
           <AddTaskModalView hideModal={closeModal} />
         </Modal>
       )}

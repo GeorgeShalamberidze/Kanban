@@ -41,6 +41,7 @@ const EditBoardModalView: React.FC<{
     const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
       board.id === updatedBoard.id ? updatedBoard : board
     );
+    setAllBoards(updatedBoardDataArray as BoardData[]);
     setActiveBoard((prev) => {
       if (!prev) return prev;
 

@@ -19,6 +19,14 @@ const ThreeDots: React.FC = () => {
   const [allBoards] = useAtom(allBoardsAtom);
   const navigate = useNavigate();
 
+  const handleOnClick = () => {
+    closeDropDown();
+    openModal();
+    if (allBoards?.length === 1) {
+      navigate(DASHBOARD_PATHS.ROOT);
+    }
+  };
+
   return (
     <div className="relative flex justify-center">
       <img
@@ -42,13 +50,7 @@ const ThreeDots: React.FC = () => {
           <Button
             title="Delete Board"
             className="text-red cursor-pointer hover:opacity-75"
-            onClick={() => {
-              closeDropDown();
-              openModal();
-              if (allBoards?.length === 1) {
-                navigate(DASHBOARD_PATHS.ROOT);
-              }
-            }}
+            onClick={handleOnClick}
           />
         </DropDown>
       )}
