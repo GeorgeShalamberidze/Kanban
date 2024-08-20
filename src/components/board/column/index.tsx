@@ -19,7 +19,7 @@ const Column: React.FC<ColumnPropType> = ({
     <div
       className={twMerge("w-[280px] column flex flex-col gap-[14px] h-full")}
     >
-      <div className="flex gap-3 items-center text-medium-gray">
+      <div className="flex gap-3 items-center text-medium-gray px-2">
         <div className="flex gap-3 items-center text-medium-gray">
           <div
             className={twMerge(
