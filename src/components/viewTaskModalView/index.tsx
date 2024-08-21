@@ -1,12 +1,11 @@
 import { Subtask } from "@/api/boards/index.types";
 import { Field, Form, Formik } from "formik";
-import { twMerge } from "tailwind-merge";
 import { EDIT_TASK_FORM_FIELDS } from "./formFields";
+import { useViewTask } from "./useViewTask";
 import Button from "../button";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
-import Dots from "@/assets/svg/vertical-dots.svg";
 import Checkbox from "../checkbox";
-import { useViewTask } from "./useViewTask";
+import ViewTaskDropdownMenu from "./viewTaskDropDownmenu";
 
 type ViewTaskModalViewPropType = {
   id: string;
@@ -16,15 +15,19 @@ type ViewTaskModalViewPropType = {
   subTasks: Subtask[];
   completedSubTaskCount: number;
   hideModal: () => void;
+  openDeleteTaskModal: () => void;
+  openEditTaskModal: () => void;
 };
 
 const ViewTaskModalView: React.FC<ViewTaskModalViewPropType> = ({
   id,
   description,
+  title,
   status,
   subTasks,
   completedSubTaskCount,
-  title,
+  openDeleteTaskModal,
+  openEditTaskModal,
   hideModal,
 }) => {
   const { activeBoard, handleEditTask } = useViewTask({
@@ -40,13 +43,13 @@ const ViewTaskModalView: React.FC<ViewTaskModalViewPropType> = ({
           <p className="text-[18px] text-black dark:text-white font-bold">
             {title}
           </p>
-          <img
-            src={Dots}
-            alt="vertical dots"
-            className={twMerge("cursor-pointer")}
+          <ViewTaskDropdownMenu
+            hideModal={hideModal}
+            openEditTaskModal={openEditTaskModal}
+            openDeleteTaskModal={openDeleteTaskModal}
           />
         </div>
-        <p className="text-[13px] text-medium-gray">
+        <p className="text-[13px] text-medium-gray break-words">
           {description && description !== "" ? description : "NO Description"}
         </p>
         <div className="flex text-[13px] text-medium-gray font-bold">

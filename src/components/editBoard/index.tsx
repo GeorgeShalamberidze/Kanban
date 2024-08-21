@@ -1,82 +1,18 @@
-import { activeBoardAtom, allBoardsAtom } from "@/store/board";
-import { ADD_BOARD_FORM_FIELDS } from "../boards/formFields";
 import Input from "../input";
 import Cross from "@/assets/svg/icon-cross.svg";
-import { useAtom } from "jotai";
 import Button from "../button";
+import { ADD_BOARD_FORM_FIELDS } from "../boards/formFields";
 import { FieldArray, Form, Formik } from "formik";
-import { BoardData, Column } from "@/api/boards/index.types";
-import { generateRandomColor } from "@/helpers/generateRandomColor";
+import { useEditBoard } from "./useEditBoard";
 
 const EditBoardModalView: React.FC<{
   hideModal: () => void;
-  hideDropDown?: () => void;
-  isDropDownOpen?: boolean;
   isColumnUpdate?: boolean;
-}> = ({ hideModal, hideDropDown, isDropDownOpen, isColumnUpdate = false }) => {
-  const [activeBoard, setActiveBoard] = useAtom(activeBoardAtom);
-  const [allBoards, setAllBoards] = useAtom(allBoardsAtom);
-
-  const handleSubmit = (values: {
-    boardName: string | undefined;
-    boardColumns: Column[];
-  }) => {
-    const updatedColumns = [
-      ...(values?.boardColumns || []).map((column: Column) =>
-        column.tasks
-          ? column
-          : { name: column.name, tasks: [], bgColor: generateRandomColor() }
-      ),
-    ];
-
-    const updatedBoard = {
-      ...activeBoard,
-      name:
-        values.boardName && values.boardName !== activeBoard?.name
-          ? values.boardName
-          : activeBoard?.name!,
-      columns: updatedColumns,
-    };
-
-    const updatedBoardDataArray = allBoards?.map((board: BoardData) =>
-      board.id === updatedBoard.id ? updatedBoard : board
-    );
-    setAllBoards(updatedBoardDataArray as BoardData[]);
-    setActiveBoard((prev) => {
-      if (!prev) return prev;
-
-      return { ...prev, ...updatedBoard };
-    });
-
-    localStorage.setItem("boardData", JSON.stringify(updatedBoardDataArray));
-    localStorage.setItem("activeBoard", JSON.stringify(updatedBoard));
-
-    if (isColumnUpdate) {
-      const boardIndex = allBoards?.findIndex(
-        (board) => board.name === activeBoard?.name
-      );
-
-      const updatedBoards = allBoards?.map((board, index) =>
-        index === boardIndex
-          ? {
-              ...board,
-              name: values.boardName ? values.boardName : board.name,
-            }
-          : board
-      );
-
-      setAllBoards((prev) => {
-        if (!prev) return prev;
-        return updatedBoards;
-      });
-      localStorage.setItem("activeBoard", JSON.stringify(updatedBoard));
-    }
-
-    hideModal();
-    if (isDropDownOpen) {
-      hideDropDown?.();
-    }
-  };
+}> = ({ hideModal, isColumnUpdate = false }) => {
+  const { activeBoard, handleSubmit } = useEditBoard({
+    hideModal,
+    isColumnUpdate,
+  });
 
   return (
     <div className="flex-1 flex flex-col gap-6">

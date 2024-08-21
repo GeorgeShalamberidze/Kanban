@@ -1,33 +1,58 @@
 import Button from "../button";
 import Input from "../input";
-import { ADD_TASK_FORM_FIELDS } from "./formFields";
 import Cross from "@/assets/svg/icon-cross.svg";
 import DownCarrot from "@/assets/svg/icon-chevron-down.svg";
+import { ADD_TASK_FORM_FIELDS } from "./formFields";
 import { Field, FieldArray, Form, Formik } from "formik";
-import { useAddTask } from "./useAddTask";
+import { useEditAddTask } from "./useEditAddTask";
+import { v4 as uuidv4 } from "uuid";
 
-const initialValues = {
+const initialValues: any = {
   title: "",
   description: "",
   subtasks: [
     {
-      task: "",
+      title: "",
+      isCompleted: false,
+      id: "",
     },
   ],
   status: "",
 };
 
-const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
+type EditAddTaskModalViewPropType = {
+  hideModal: () => void;
+  isEdit?: boolean;
+  status?: string;
+  id?: string;
+};
+
+const EditAddTaskModalView: React.FC<EditAddTaskModalViewPropType> = ({
   hideModal,
+  isEdit = false,
+  status,
+  id,
 }) => {
-  const { activeBoard, handleSubmitAddTask } = useAddTask({ hideModal });
+  const { activeBoard, handleSubmitAddTask } = useEditAddTask({
+    hideModal,
+    isEdit,
+    status,
+    id,
+  });
+
+  let initialTaskValue = activeBoard?.columns
+    .find((r) => r.name === status)
+    ?.tasks.find((task) => task.id === id);
 
   return (
     <div className="bg-white dark:bg-dark-gray flex flex-col gap-6 w-full">
       <div className="text-black dark:text-white font-bold text-lg">
-        Add New Task
+        {isEdit ? "Edit Task" : "Add New Task"}
       </div>
-      <Formik initialValues={initialValues} onSubmit={handleSubmitAddTask}>
+      <Formik
+        initialValues={isEdit ? initialTaskValue : initialValues}
+        onSubmit={handleSubmitAddTask}
+      >
         {({ values }) => {
           return (
             <Form className="flex flex-col gap-6 w-full">
@@ -40,7 +65,6 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
                 id={ADD_TASK_FORM_FIELDS.title.name}
               />
               <Input
-                required
                 className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
                 label={ADD_TASK_FORM_FIELDS.description.label}
                 name={ADD_TASK_FORM_FIELDS.description.name}
@@ -66,11 +90,11 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
                             <Input
                               required
                               className="w-full border-[#828FA3]/25 bg-white dark:bg-dark-gray dark:text-white"
-                              name={`subtasks.${i}.task`}
+                              name={`subtasks.${i}.title`}
                               placeholder={
                                 ADD_TASK_FORM_FIELDS.subtasks.placeholder
                               }
-                              id={`subtasks.${i}.task`}
+                              id={`subtasks.${i}.title`}
                             />
                             <img
                               src={Cross}
@@ -83,7 +107,9 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
                       <Button
                         title="+ Add New Subtask"
                         className="w-full flex items-center justify-center py-2 rounded-full bg-[#635FC7]/10 dark:bg-white hover:opacity-75 text-main-purple font-bold text-base"
-                        onClick={() => push({ task: "" })}
+                        onClick={() =>
+                          push({ title: "", isCompleted: false, id: uuidv4() })
+                        }
                       />
                     </div>
                   );
@@ -120,7 +146,7 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
               </div>
               <Button
                 type="submit"
-                title="Create Task"
+                title={isEdit ? "Save Task" : "Create Task"}
                 className="w-full mb-8 flex items-center justify-center py-2 rounded-full bg-main-purple hover:bg-main-purple-hover text-white font-bold text-base"
               />
             </Form>
@@ -131,4 +157,4 @@ const AddTaskModalView: React.FC<{ hideModal: () => void }> = ({
   );
 };
 
-export default AddTaskModalView;
+export default EditAddTaskModalView;

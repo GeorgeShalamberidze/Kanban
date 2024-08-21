@@ -1,5 +1,5 @@
 import PlusIcon from "@/assets/svg/icon-add-task-mobile.svg";
-import AddTaskModalView from "@/components/addTaskModalView";
+import EditAddTaskModalView from "@/components/addTaskModalView";
 import Modal from "@/components/modal";
 import useModal from "@/hooks/useModal";
 import { activeBoardAtom } from "@/store/board";
@@ -27,7 +27,7 @@ const AddNewTask: React.FC = () => {
       </button>
       {isModalOpen && (
         <Modal hideModal={closeModal}>
-          <AddTaskModalView hideModal={closeModal} />
+          <EditAddTaskModalView hideModal={closeModal} />
         </Modal>
       )}
     </>

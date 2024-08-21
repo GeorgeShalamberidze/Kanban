@@ -10,12 +10,12 @@ import { twMerge } from "tailwind-merge";
 import AllBoards from "../allBoards";
 import Boards from "../boards";
 import ThemeSwitcher from "../themeSwitcher";
-import ThreeDots from "../threeDots";
 import AddNewTask from "./addNewTask";
 import UpArrow from "./upArrow";
 import DownArrow from "./downArrow";
 import BoardIconPurple from "@/assets/svg/icon-board-purple.svg";
 import AddBoardModalView from "../addBoardModalView";
+import HeaderDropdownMenu from "../headerDropdownMenu";
 
 const Header: React.FC = () => {
   const [activeBoard] = useAtom(activeBoardAtom);
@@ -71,7 +71,7 @@ const Header: React.FC = () => {
       )}
       <div className="flex gap-6">
         <AddNewTask />
-        <ThreeDots />
+        <HeaderDropdownMenu />
       </div>
       {isModalOpen && (
         <Modal hideModal={closeModal} className="w-full">

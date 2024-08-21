@@ -8,7 +8,7 @@ const NewColumn: React.FC<{ maxHeight: number }> = ({ maxHeight }) => {
   return (
     <>
       <div
-        className="w-[280px] flex flex-col gap-6 cursor-pointer mt-[47.5px] pb-5 ml-2"
+        className="w-[280px] flex flex-col gap-6 cursor-pointer mt-[47px] pb-5 ml-2"
         style={{ height: maxHeight - 27 }}
       >
         <div

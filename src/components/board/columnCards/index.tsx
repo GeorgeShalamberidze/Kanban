@@ -1,9 +1,6 @@
-import { BoardData, Column, Task } from "@/api/boards/index.types";
+import { Task } from "@/api/boards/index.types";
 import Card from "../card";
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useAtom } from "jotai";
-import { activeBoardAtom, allBoardsAtom } from "@/store/board";
 import { useColumnCards } from "./useColumnCards";
 
 type ColumnCardPropType = {
@@ -13,11 +10,11 @@ type ColumnCardPropType = {
 
 const ColumnCards: React.FC<ColumnCardPropType> = ({ tasks, columnName }) => {
   const {
+    active,
     handleDragEnd,
     handleDragLeave,
     handleDragOver,
     handleDragStart,
-    active,
   } = useColumnCards({ columnName, tasks });
 
   return (
@@ -34,7 +31,7 @@ const ColumnCards: React.FC<ColumnCardPropType> = ({ tasks, columnName }) => {
         const completedSubTaskCount = task?.subtasks?.filter(
           (task) => task.isCompleted
         ).length;
-        const subTaskCount = task.subtasks.length;
+        const subTaskCount = task.subtasks?.length || 0;
         return (
           <Card
             columnName={columnName}
